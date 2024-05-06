@@ -20,6 +20,7 @@ import { AllergiesModalContent } from "@/components/modal-content/allergies-moda
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import Pagination from "@/components/shared/pagination";
+import PdfDownloader from "@/components/pdfDownloader";
 
 const Allergies = () => {
   const router = useRouter();
@@ -198,78 +199,6 @@ const Allergies = () => {
     setIsErrorOpen(true);
     setIsEdit(false);
   };
-  const handleDownloadPDF = async () => {
-    if (patientAllergies.length === 0) {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Allergy list is empty",
-        action: (
-          <ToastAction
-            altText="Try again"
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            Try again
-          </ToastAction>
-        ),
-      });
-    } else {
-      const allergies = await fetchAllergiesForPDF(
-        patientId,
-        term,
-        currentPage,
-        sortBy,
-        sortOrder as "ASC" | "DESC",
-        0,
-        router
-      );
-      let patientName =
-        allergies[0]?.patient_lastName +
-        ", " +
-        allergies[0]?.patient_firstName +
-        " " +
-        allergies[0]?.patient_middleName;
-      let jsonFile: {
-        "Allergy UID": string;
-        Date: string;
-        Type: string;
-        Allergen: string;
-        Severity: string;
-        Reaction: string;
-        Notes: string;
-      }[] = allergies.map((allergy) => ({
-        "Allergy UID": allergy.allergies_uuid,
-        Date: new Date(allergy.allergies_createdAt).toLocaleDateString(),
-        Type: allergy.allergies_type,
-        Allergen: allergy.allergies_allergen,
-        Severity: allergy.allergies_severity,
-        Reaction: allergy.allergies_reaction,
-        Notes: allergy.allergies_notes,
-      }));
-
-      const patientFullName = patientName;
-
-      printJS({
-        printable: jsonFile,
-        properties: [
-          "Allergy UID",
-          "Date",
-          "Type",
-          "Allergen",
-          "Severity",
-          "Reaction",
-          "Notes",
-        ],
-        type: "json",
-        gridHeaderStyle: "color: red;  border: 2px solid #3971A5;",
-        header: patientFullName,
-        gridStyle: "border: 2px solid #3971A5;",
-        documentTitle: `${patientFullName}'s Allergies`,
-      });
-    }
-  };
 
   return (
     <div className="w-full h-full flex flex-col justify-between">
@@ -305,15 +234,19 @@ const Allergies = () => {
               <p className="text-[18px]">Add</p>
             </button>
 
-            <button className="btn-pdfs gap-2" onClick={handleDownloadPDF}>
-              <Image
-                src="/imgs/downloadpdf.svg"
-                alt=""
-                width={22}
-                height={22}
-              />
-              <p className="text-[18px]">Download PDF</p>
-            </button>
+            <PdfDownloader
+              data={patientAllergies}
+              props={[
+                "Uuid",
+                "Date",
+                "Type",
+                "Allergen",
+                "Severity",
+                "Reaction",
+                "Notes",
+              ]}
+              variant={"Allergy Table"}
+            />
           </div>
         </div>
         <div className="w-full m:rounded-lg items-center">
@@ -381,15 +314,16 @@ const Allergies = () => {
               <tr className="uppercase text-[#64748B] border-y text-[15px] h-[70px] font-semibold">
                 <td className="px-6 py-3">Allergy ID</td>
                 <td className="px-6 py-3">Date</td>
-                <td className="px-5 py-3">Type</td>
-                <td className="px-5 py-3">Allergen</td>
-                <td className="px-4 py-3">Severity</td>
-                <td className="px-4 py-3">Reaction</td>
-                <td className="px-4 py-3 ">Notes</td>
-                <td className="py-3 px-14">Action </td>
+                <td className="px-6 py-3">Type</td>
+                <td className="px-6 py-3">Allergen</td>
+                <td className="px-6 py-3">Severity</td>
+                <td className="px-6 py-3">Reaction</td>
+                <td className="px-6 py-3">Notes</td>
+                <td className="py-3 px-6 text-center">Action</td>
+                <td className="w-[14px]"></td>
               </tr>
             </thead>
-            <tbody className="h-[220px]">
+            <tbody className="h-[220px] overflow-y-scroll">
               {patientAllergies.length === 0 && (
                 <h1 className="border-1 w-[180vh] py-5 absolute flex justify-center items-center">
                   <p className="text-[15px] font-normal text-gray-700 text-center">
@@ -402,10 +336,10 @@ const Allergies = () => {
                   key={index}
                   className=" group hover:bg-[#f4f4f4]  border-b text-[15px] "
                 >
-                  <td className="truncate px-5 py-3">
+                  <td className="truncate px-6 py-3 ">
                     {allergy.allergies_uuid}
                   </td>
-                  <td className="truncate px-5 py-3">
+                  <td className="truncate px-6 py-3">
                     {" "}
                     {new Date(allergy.allergies_createdAt).toLocaleDateString()}
                   </td>
@@ -426,7 +360,7 @@ const Allergies = () => {
                     {allergy.allergies_notes ? allergy.allergies_notes : "None"}
                   </td>
 
-                  <td className="py-3 flex justify-center">
+                  <td className="py-3 px-6 flex justify-center ">
                     <p
                       onClick={() => {
                         isModalOpen(true);
