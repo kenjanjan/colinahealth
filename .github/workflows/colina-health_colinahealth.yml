@@ -24,7 +24,7 @@ jobs:
           echo NEXT_PUBLIC_API_URL=https://becolinahealth.azurewebsites.net >> .env
           echo NEXT_USER=destrada@jairosolutions.com >> .env
           echo NEXT_PASS=sadk vadn orma vyyl >> .env    
-          echo NEXT_PUBLIC_REMEMBER_TIME=3m >> .env
+          echo NEXT_PUBLIC_REMEMBER_TIME=30d >> .env
 
       - name: npm install, build, and test
         run: |
