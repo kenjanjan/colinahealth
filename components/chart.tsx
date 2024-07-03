@@ -195,7 +195,7 @@ const Chart = () => {
                 No Patient Found
               </div>
             ) : (
-              <div className="relative flex w-full overflow-hidden">
+              <div className="relative flex w-full overflow-hidden pr-4">
                 <div className="sticky top-0 md:w-2/6">
                   <div className="w-full">
                     <PatientCard

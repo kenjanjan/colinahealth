@@ -175,7 +175,7 @@ const TimeGraph = ({
   console.log(patientWithMedicationLogsToday.length, "lenght");
   return (
     <div className="w-full">
-      <div className="h-full w-[320vh] overflow-hidden">
+      <div className="h-full w-[320vh] overflow-hidden ">
         <div className="z-5 relative">
           <div
             ref={lineRef}
@@ -199,7 +199,7 @@ const TimeGraph = ({
         </div>
 
         <table
-          className="time-graph-table h-full w-full"
+          className="time-graph-table h-full w-full "
           style={{ tableLayout: "fixed" }}
         >
           <thead>
