@@ -314,7 +314,7 @@ const TimeGraph = ({
                                     (log: { medicationLogStatus: string }) =>
                                       log.medicationLogStatus !== "pending",
                                   ) && (
-                                    <TooltipContent className="z-[9999] overflow-visible text-wrap bg-[#007C85] text-white">
+                                    <TooltipContent className="z-[9999] overflow-visible text-wrap bg-[#007C85] text-white rounded-[2.4px]">
                                       <p className="relative z-[51] flex flex-col gap-2 break-words p-1 text-[15px]">
                                         {logsInColumn
                                           .filter(
@@ -425,7 +425,7 @@ const TimeGraph = ({
                                       </div>
                                     </div>
                                   </DropdownMenuTrigger>
-                                  <DropdownMenuContent className="mt-1 border-none bg-[#007C85] text-white">
+                                  <DropdownMenuContent className="mt-1 border-none bg-[#007C85] text-white  rounded-[2.4px]">
                                     {logsInColumn
                                       .filter(
                                         (log: {

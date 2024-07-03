@@ -265,7 +265,7 @@ const PatientCard = ({
                               </div>
                             </div>
                           </TooltipTrigger>
-                          <TooltipContent className="overflow-visible text-wrap  bg-[#007C85] text-white ">
+                          <TooltipContent className="overflow-visible text-wrap  bg-[#007C85] text-white  rounded-[2.4px]">
                             <p className="relative z-[51] flex flex-col gap-2 break-words p-1 text-[15px]">
                               {patient.medicationlogs
                                 .filter(
