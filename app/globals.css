@@ -432,5 +432,13 @@ table {
   color: #db3956;
   border-color: #db3956;
   border-width: 1px;
-  
+}
+.chart-header {
+  font-size: 20px;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.gray-1 {
+  color: #64748b;
 }
