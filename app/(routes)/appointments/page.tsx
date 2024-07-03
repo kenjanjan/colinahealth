@@ -143,8 +143,7 @@ export default function AppointmentPage() {
     { label: "Date", onClick: handleSortOptionClick },
     { label: "Time", onClick: handleSortOptionClick },
     { label: "End Time", onClick: handleSortOptionClick },
-    { label: "Status", onClick: handleSortOptionClick }
-
+    { label: "Status", onClick: handleSortOptionClick },
   ]; // end of orderby & sortby function
   const optionsFilterStatus = [
     { label: "Scheduled", onClick: setFilterStatusFromCheck },
@@ -296,11 +295,14 @@ export default function AppointmentPage() {
   useEffect(() => {
     setFilterStatusFromCheck(filterStatusFromCheck);
     // const newLabel = filterStatusFromCheck.length > 0 ? filterStatusFromCheck.join(", "):"Status"
-    const newLabel = filterStatusFromCheck.length > 0 ? `${filterStatusFromCheck.length} Status Selected` : "Status";
+    const newLabel =
+      filterStatusFromCheck.length > 0
+        ? `${filterStatusFromCheck.length} Status Selected`
+        : "Status";
 
     setStatusFiltered(newLabel);
     console.log(filterStatusFromCheck.join(", "), "parent");
-    console.log(newLabel,"new parent");
+    console.log(newLabel, "new parent");
   }, [filterStatusFromCheck]);
   // const handlePatientClick = (patientId: any) => {
   //   const lowercasePatientId = patientId.toLowerCase();
@@ -335,16 +337,8 @@ export default function AppointmentPage() {
   return (
     <div className="flex h-full w-full flex-col justify-between px-[150px] pt-[90px]">
       <div className="h-full w-full">
-        <div className="flex justify-end">
-          {/* <p
-            onClick={() => router.push("/dashboard")}
-            className="text-[#64748B] underline cursor-pointer text-[15px]"
-          >
-            Back to Dashboard
-          </p> */}
-        </div>
         <div className="flex items-center justify-between">
-          <div className="mb-3 flex flex-col">
+          <div className="flex h-full flex-col justify-center">
             <p className="p-title">Appointments List Records</p>
 
             <p className="h-[22px] w-[1157px] text-[15px] font-normal text-[#64748B]">
@@ -356,24 +350,52 @@ export default function AppointmentPage() {
           </div>
         </div>
 
-        <div className="w-full">
-          <div className="w-full bg-[#F4F4F4] justify-between items-center flex px-5 h-[75px] rounded-sm gap-5">
-            <div className="flex items-center bg-white rounded-sm border border-gray-200  px-4 py-2 h-[47px] w-[460px]">
-              <Search className="h-4 w-4 text-gray-500 mr-2" />
+        <div className="mt-4 w-full items-center sm:rounded-lg">
+          <div className="flex h-[75px] w-full items-center justify-between gap-5 bg-[#F4F4F4] pr-3">
+            {/* <div className="flex h-[47px] w-[460px] items-center rounded-sm border border-gray-200 bg-white px-4 py-2">
+              <Search className="mr-2 h-4 w-4 text-gray-500" />
               <input
                 type="text"
                 placeholder="Search by reference no. or name..."
-                className="flex-grow focus:outline-none text-gray-700"
+                className="flex-grow text-gray-700 focus:outline-none"
                 value={term}
                 onChange={(e) => {
                   setTerm(e.target.value);
                   setCurrentPage(1);
                 }}
               />
-            </div>
-
+            </div> */}
+            <form className="relative">
+              {/* search bar */}
+              <label className=""></label>
+              <div className="flex flex-col">
+                <input
+                  className="sub-title relative m-5 h-[47px] w-[460px] rounded bg-[#fff] bg-no-repeat px-5 py-3 pl-10 pt-[14px] outline-none ring-[1px] ring-[#E7EAEE]"
+                  type="text"
+                  placeholder="Search by reference no. or name..."
+                  value={term}
+                  onChange={(e) => {
+                    setTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      // Add your search logic here
+                    }
+                  }}
+                />
+                <Image
+                  src="/svgs/search.svg"
+                  alt="Search"
+                  width={18.75}
+                  height={18.75}
+                  className="pointer-events-none absolute left-8 top-9 h-[18.75px] w-[18.75px]"
+                />
+              </div>
+            </form>
             <div className="w-[500px]">
-              <div className="flex w-full justify-end items-center gap-3">
+              <div className="flex w-full items-center justify-end gap-3">
                 <p className="font-semibold text-[#191D23] text-opacity-60">
                   Filter Date
                 </p>
@@ -383,8 +405,8 @@ export default function AppointmentPage() {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[166px] justify-start text-left font-normal h-[47px] rounded-[5px]",
-                        !startDate && "text-muted-foreground"
+                        "h-[47px] w-[166px] justify-start rounded-[5px] text-left font-normal",
+                        !startDate && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -406,8 +428,8 @@ export default function AppointmentPage() {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[166px] justify-start text-left font-normal h-[47px] rounded-[5px] *:",
-                        !endDate && "text-muted-foreground"
+                        "*: h-[47px] w-[166px] justify-start rounded-[5px] text-left font-normal",
+                        !endDate && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -426,8 +448,8 @@ export default function AppointmentPage() {
               </div>
             </div>
             <div className="w-[500px]">
-              <div className="w-full justify-end items-center flex gap-3">
-                <p className="flex text-[#191D23] opacity-[60%] font-semibold">
+              <div className="flex w-full items-center justify-end gap-3">
+                <p className="flex font-semibold text-[#191D23] opacity-[60%]">
                   Order by
                 </p>
                 <DropdownMenu
@@ -441,7 +463,7 @@ export default function AppointmentPage() {
                   width={"165px"}
                   label={"Descending"}
                 />
-                <p className="text-[#191D23] opacity-[60%] font-semibold text-[15px]">
+                <p className="text-[15px] font-semibold text-[#191D23] opacity-[60%]">
                   Sort by
                 </p>
                 <DropdownMenu
@@ -460,29 +482,32 @@ export default function AppointmentPage() {
             </div>
           </div>
           <div>
-            <table className="h-full w-full items-start justify-center text-[15px]">
+            <table className="h-full w-full items-start justify-center">
               <thead className="text-left rtl:text-right">
-                <tr className="h-[70px] border-b border-[#E7EAEE] font-semibold uppercase text-[#64748B]">
+              <tr className="sub-title h-[70px] border-b border-[#E7EAEE] !font-semibold uppercase">
                   <td className="px-6 py-5">Name</td>
                   <td className="px-6 py-5">Appointment UID</td>
                   <td className="px-6 py-5">Date</td>
                   <td className="px-6 py-5">Time</td>
                   <td className="px-6 py-5">End time</td>
-                  <td className="flex justify-start px-6 py-5">
-                  <DropdownMenu
-                  options={optionsFilterStatus.map(({ label, onClick }) => ({
-                    label,
-                    onClick: () => {
-                      // onClick(label);
-                      // console.log("label", label);
-                    },
-                  }))}
-                  open={isOpenFilterStatus}
-                  width={"165px"}
-                  statusUpdate={handleStatusUpdate} // Pass the handler function
-                  checkBox={true}
-                  label={statusFiltered} 
-                />  </td>
+                  <td className="px-6 py-5">
+                    <DropdownMenu
+                      options={optionsFilterStatus.map(
+                        ({ label, onClick }) => ({
+                          label,
+                          onClick: () => {
+                            // onClick(label);
+                            // console.log("label", label);
+                          },
+                        }),
+                      )}
+                      open={isOpenFilterStatus}
+                      width={"165px"}
+                      statusUpdate={handleStatusUpdate} // Pass the handler function
+                      checkBox={true}
+                      label={statusFiltered}
+                    />{" "}
+                  </td>
                 </tr>
               </thead>
               <tbody>
