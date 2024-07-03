@@ -170,7 +170,7 @@ const DropdownMenu = ({
         </div>
       ) : (
         isOpen && (
-          <div className="absolute mt-1 flex w-[165px] cursor-pointer flex-col rounded-md bg-white px-4 pt-4 pb-2  normal-case text-[#020817] drop-shadow-md shadow-2xl">
+          <div className="absolute mt-1 flex w-[165px] cursor-pointer flex-col rounded-md bg-white px-4 pt-4 pb-2  normal-case text-[#020817] drop-shadow-dropStatus ">
             {options.map((option, index) => (
               <div key={index} className="flex flex-row gap-2">
                 <label className="flex items-center  mb-1 ">
