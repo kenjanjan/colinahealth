@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { Navbar } from "@/components/navbar";
 import { getAccessToken, setAccessToken } from "../api/login-api/accessToken";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useParams, usePathname, useRouter } from "next/navigation";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import Footer from "@/components/footer";
@@ -62,16 +62,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
   }, [lastActive]);
 
+  const pathname = usePathname();
+  const pathParts = pathname.split("/");
+  const baseRoute = pathParts[1] || ""; // Get the first part after the base URL
+  console.log(baseRoute, "baseRoute");
+
   return (
     <>
-      <div className="flex flex-col h-screen relative">
+      <div className="relative flex h-screen flex-col">
         <Navbar
         // setIsLoading={setIsLoading}
         />
         <Suspense fallback={<Loading />}>
-          <div className="flex-grow ">{children}</div>
+          <div className="flex-grow">{children}</div>
         </Suspense>
-        <Footer />
+        <div className={`${baseRoute == "patient-overview" ? "hidden" : ""}`}>
+          <Footer />
+        </div>
       </div>
     </>
   );
