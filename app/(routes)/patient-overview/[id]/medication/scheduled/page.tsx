@@ -205,8 +205,8 @@ const Scheduled = () => {
   console.log("patientScheduledMed", patientScheduledMed);
   console.log(patientScheduledMed);
   return (
-    <div className="  w-full h-full flex flex-col justify-between">
-      <div className="w-full h-full">
+    <div className="w-full h-full flex flex-col justify-between">
+      <div className="w-full h-full mb-5">
         <div className="w-full justify-between flex mb-2">
           <div className="flex-row">
             <div className="flex gap-2">

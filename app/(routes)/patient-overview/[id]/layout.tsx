@@ -6,7 +6,7 @@ export default function PatientOverviewLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen relative">
+    <div className="flex h-screen relative w-full">
       <PatientOverviewPage children={children}/>
     </div>
   );

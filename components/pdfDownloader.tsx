@@ -6,8 +6,9 @@ import { ToastAction } from "./ui/toast";
 import DownloadPDF from "./shared/buttons/downloadpdf";
 import { fetchDueMedication } from "@/app/api/medication-logs-api/due-medication-api";
 import { useRouter } from "next/navigation";
-import { print } from "@/lib/utils";
+import { downloadPdf } from "@/lib/utils";
 import { searchPatientList } from "@/app/api/patients-api/patientList.api";
+import { fetchAllAppointments } from "@/app/api/appointments-api/fetch-all-appointments.api";
 
 const PdfDownloader = ({ props, variant }: any) => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const PdfDownloader = ({ props, variant }: any) => {
           "medicationlogs.medicationLogsTime",
           sortOrder as "ASC" | "DESC",
           0,
-          router
+          router,
         );
 
         if (dueMedicationList.data.length === 0) {
@@ -56,7 +57,7 @@ const PdfDownloader = ({ props, variant }: any) => {
             Time: d.medicationlogs_medicationLogsTime,
           }));
 
-          print(jsonFile, props, variant);
+          downloadPdf(jsonFile, props, variant);
         }
       } catch (error) {
         console.error("Error fetching due medications:", error);
@@ -75,7 +76,7 @@ const PdfDownloader = ({ props, variant }: any) => {
           "firstName",
           sortOrder as "ASC" | "DESC",
           0,
-          router
+          router,
         );
 
         console.log(patientList, "patientList");
@@ -108,7 +109,7 @@ const PdfDownloader = ({ props, variant }: any) => {
             Gender: d.gender,
           }));
 
-          print(jsonFile, props, variant);
+          downloadPdf(jsonFile, props, variant);
         }
       } catch (error) {
         console.error("Error fetching due medications:", error);
@@ -116,6 +117,66 @@ const PdfDownloader = ({ props, variant }: any) => {
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch due medications",
+        });
+      }
+    }
+    if (variant === "Appointment List Table") {
+      try {
+        const startD = "2021-01-01";
+        const endD = "2300-01-01";
+        const appointmentList = await fetchAllAppointments(
+          "",
+          1,
+          "time",
+          sortOrder as "ASC" | "DESC",
+          startD,
+          endD,
+          0,
+          router,
+        );
+
+        console.log(appointmentList, "appointmentList");
+        if (appointmentList.data.length === 0) {
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "Appointment List is empty",
+            action: (
+              <ToastAction
+                altText="Try again"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Try again
+              </ToastAction>
+            ),
+          });
+        } else {
+          let jsonFile: {
+            Name: string;
+            Uuid: string;
+            Date: string;
+            Start_Time: any;
+            End_Time: any,
+            Status: string,
+          }[] = appointmentList.data.map((d: any) => ({
+            Name: d.patient_firstName + " " + d.patient_lastName,
+            Uuid: d.appointments_uuid,
+            Date: d.appointments_appointmentDate,
+            Start_Time: d.appointments_appointmentTime,
+            End_Time: d.appointments_appointmentEndTime,
+            Status: d.appointments_appointmentStatus,
+          }));
+
+          downloadPdf(jsonFile, props, variant);
+        }
+      } catch (error) {
+        console.error("Error fetching appointmentlist:", error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Failed to fetch appointment list",
         });
       }
     }
