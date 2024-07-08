@@ -227,7 +227,7 @@ const Scheduled = () => {
               </span>
             </div>
             <div>
-              <p className="text-[#64748B] font-normal w-[1157px] h-[22px] text-[15px]">
+              <p className="text-[#64748B] font-normal h-[22px] text-[15px]">
                 Total of {totalScheduledMeds} Scheduled Medication Logs
               </p>
             </div>
@@ -326,7 +326,7 @@ const Scheduled = () => {
               <tbody className="h-[220px] overflow-y-scroll">
                 {patientScheduledMed.length === 0 && (
                   <tr>
-                    <td className="border-1 w-[180vh] py-5 absolute flex justify-center items-center">
+                    <td className="border-1 py-5 absolute flex justify-center items-center">
                       <p className="text-[15px] font-normal text-gray-700 flex text-center">
                         No Scheduled Medication Log/s <br />
                       </p>

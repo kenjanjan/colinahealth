@@ -129,6 +129,7 @@ const PdfDownloader = ({ props, variant }: any) => {
           1,
           "time",
           sortOrder as "ASC" | "DESC",
+          ["Scheduled"],
           startD,
           endD,
           0,
