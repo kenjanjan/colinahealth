@@ -11,6 +11,7 @@ export async function fetchAllAppointments(
   sortOrder: "ASC" | "DESC",
   startDate: string,
   endDate: string,
+  perPage: number,
   router: any // Pass router instance as a parameter
 ): Promise<any> {
   const requestData = {
@@ -20,6 +21,7 @@ export async function fetchAllAppointments(
     sortOrder: sortOrder,
     startDate: startDate,
     endDate: endDate,
+    perPage: perPage,
   };
   try {
     console.log("searchPatient", requestData);
