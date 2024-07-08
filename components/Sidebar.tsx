@@ -1,7 +1,10 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, formatDate, formatTime } from "@/lib/utils";
 import Image from "next/image";
 import ResuableTooltip from "./reusable/tooltip";
+import { fetchPatientLatestReport } from "@/app/api/patients-api/patientRecentInfo.api";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 interface SideBarProps {
   isCollapsed: boolean;
@@ -11,6 +14,16 @@ interface SideBarProps {
   isCloseHovered: boolean;
 }
 
+interface PatientInfo {
+  patient_admissionDate: string;
+}
+
+interface RecentMedication {
+  medicationlogs_medicationLogsName: string;
+  medicationlogs_medicationLogsDate: string;
+  medicationlogs_medicationLogsTime: string;
+}
+
 const Sidebar = ({
   isCollapsed,
   setIsCollapsed,
@@ -18,9 +31,34 @@ const Sidebar = ({
   onCloseHoverEnter,
   isCloseHovered,
 }: SideBarProps) => {
+  const router = useRouter();
+  const params = useParams<{
+    id: any;
+    tag: string;
+    item: string;
+  }>();
+  const patientId = params.id.toUpperCase();
+  const [recentMedication, setRecentMedication] = useState<RecentMedication>({
+    medicationlogs_medicationLogsName: "",
+    medicationlogs_medicationLogsDate: "1111-11-11",
+    medicationlogs_medicationLogsTime: "00:00",
+  });
+  const [patientInfo, setPatientInfo] = useState<PatientInfo>({
+    patient_admissionDate: "",
+  });
   const toggleSidebar = () => {
     setIsCollapsed((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const latestReport = await fetchPatientLatestReport(patientId, router);
+      setRecentMedication(latestReport.data.recentMedication);
+      setPatientInfo(latestReport.data.data[0]);
+      console.log(latestReport.data, "latestReport");
+    };
+    fetchData();
+  }, []);
 
   return (
     <aside
@@ -47,36 +85,67 @@ const Sidebar = ({
         </div>
         <div className="sidebar-divider" />
         <h1 className="font-semibold text-[#FCFF9D]">
-          Admission Date: 10/24/2023
+          Admission Date:{" "}
+          {patientInfo?.patient_admissionDate
+            ? formatDate(patientInfo.patient_admissionDate)
+            : "00 / 00 / 00"}
         </h1>
         <div className="sidebar-divider" />
-        <div className="flex flex-col">
-          <h1 className="font-semibold text-[#4FF4FF]">
-            Recent Medication{" "}
-            <span className="text-[#FCFF9D]"><span className="text-white">-</span> 02/23/42 : 10:00AM</span>
-          </h1>
-          <div className="grid grid-cols-[0.5fr_1fr]">
-            <div>Status:</div>
-            <div className="w-fit rounded-[5px] bg-[#1EBC10] px-2 py-0.5 text-[12px]">
-              Given
+        {recentMedication.medicationlogs_medicationLogsName != null ? (
+          <div className="flex flex-col">
+            <h1 className="font-semibold text-[#4FF4FF]">
+              Recent Medication{" "}
+              <span className="text-[#FCFF9D]">
+                <span className="text-white">-</span>{" "}
+                {formatDate(recentMedication.medicationlogs_medicationLogsDate)}{" "}
+                :{" "}
+                {formatTime(recentMedication.medicationlogs_medicationLogsTime)}
+              </span>
+            </h1>
+            <div className="grid grid-cols-[0.5fr_1fr]">
+              <div>Status:</div>
+              <div className="w-fit rounded-[5px] bg-[#1EBC10] px-2 py-0.5 text-[12px]">
+                Given
+              </div>
+            </div>
+            <div className="grid grid-cols-[0.5fr_1fr]">
+              <div>Medication</div>
+              <div>Nasal Steroids</div>
+            </div>
+            <div className="grid grid-cols-[0.5fr_1fr]">
+              <div>Note:</div>
+              <div className="truncate">
+                <ResuableTooltip text={"Patient advice to follow-up dsadasd"} />
+              </div>
             </div>
           </div>
-          <div className="grid grid-cols-[0.5fr_1fr]">
-            <div>Medication</div>
-            <div>Nasal Steroids</div>
-          </div>
-          <div className="grid grid-cols-[0.5fr_1fr]">
-            <div>Note:</div>
-            <div className="truncate">
-              <ResuableTooltip text={"Patient advice to follow-up dsadasd"} />
+        ) : (
+          <div className="flex flex-col">
+            <h1 className="font-semibold text-[#4FF4FF]">Recent Medication </h1>
+            <div className="grid grid-cols-[0.5fr_1fr]">
+              <div>Status:</div>
+              <div className="">N/A</div>
+            </div>
+            <div className="grid grid-cols-[0.5fr_1fr]">
+              <div>Medication</div>
+              <div>N/A</div>
+            </div>
+            <div className="grid grid-cols-[0.5fr_1fr]">
+              <div>Note:</div>
+              <div className="truncate">
+                <h1>N/A</h1>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="sidebar-divider" />
         <div className="flex flex-col">
           <h1 className="font-semibold text-[#4FF4FF]">
-            PRN <span className="text-[#FCFF9D]"><span className="text-white">-</span> 02/23/42 : 10:00AM</span>
+            PRN{" "}
+            <span className="text-[#FCFF9D]">
+              <span className="text-white">-</span> 02/23/42 : 10:00AM
+            </span>
           </h1>
           <div className="grid grid-cols-[0.5fr_1fr]">
             <div>Status:</div>
@@ -100,7 +169,9 @@ const Sidebar = ({
         <div className="flex flex-col">
           <h1 className="mb-1 font-semibold text-[#4FF4FF]">
             Vital Sign{" "}
-            <span className="text-[#FCFF9D]"><span className="text-white">-</span> 02/23/42 : 10:00AM</span>
+            <span className="text-[#FCFF9D]">
+              <span className="text-white">-</span> 02/23/42 : 10:00AM
+            </span>
           </h1>
           <div className="grid grid-cols-6">
             <div className="col-span-2">BP (mmHg):</div>
@@ -126,7 +197,9 @@ const Sidebar = ({
         <div className="flex flex-col">
           <h1 className="mb-1 font-semibold text-[#4FF4FF]">
             Lab Results{" "}
-            <span className="text-[#FCFF9D]"><span className="text-white">-</span> 02/23/42 : 10:00AM</span>
+            <span className="text-[#FCFF9D]">
+              <span className="text-white">-</span> 02/23/42 : 10:00AM
+            </span>
           </h1>
           <div className="grid grid-cols-6">
             <div className="col-span-2">Hemo A1c:</div>
