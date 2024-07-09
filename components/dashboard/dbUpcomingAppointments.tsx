@@ -38,6 +38,7 @@ const DBUpcomingAppointments = () => {
   const [totalUpcoming, setTotalUpcoming] = useState(0);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const upcomingAppoinments = await fetchUpcomingAppointments(
@@ -46,22 +47,22 @@ const DBUpcomingAppointments = () => {
           upcomingSortBy,
           sortOrder as "ASC" | "DESC",
           3,
-          router
+          router,
         );
         setUpcomingAppointments(upcomingAppoinments.data);
         setTotalUpcoming(upcomingAppoinments.totalCount);
         setUpcomingTotalPages(upcomingAppoinments.totalPages);
-        setIsLoading2(false);
+        setIsLoading(false);
         const uniquePatientUuids = new Set(
           upcomingAppoinments.data.map(
-            (patient: { patient_uuid: any }) => patient.patient_uuid
-          )
+            (patient: { patient_uuid: any }) => patient.patient_uuid,
+          ),
         );
 
         const patientUuids = Array.from(uniquePatientUuids);
 
         const profileImagesResponse = await fetchProfileImages(
-          patientUuids as string[]
+          patientUuids as string[],
         );
         if (profileImagesResponse) {
           const patientImagesData = profileImagesResponse.map((image: any) => {
@@ -69,7 +70,7 @@ const DBUpcomingAppointments = () => {
             if (image.data) {
               const buffer = Buffer.from(image.data);
               const dataUrl = `data:image/jpeg;base64,${buffer.toString(
-                "base64"
+                "base64",
               )}`;
               return {
                 patientUuid: image.patientUuid,
@@ -87,23 +88,23 @@ const DBUpcomingAppointments = () => {
           console.log(setAppointmentPatientImages, "patientAppointmentImages");
         }
       } catch (error: any) {
-        setError(error.message);
-        console.log("error");
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: error.message,
-          action: (
-            <ToastAction
-              altText="Try again"
-              onClick={() => {
-                window.location.reload();
-              }}
-            >
-              Try again
-            </ToastAction>
-          ),
-        });
+        // setError(error.message);
+        // console.log("error");
+        // toast({
+        //   variant: "destructive",
+        //   title: "Uh oh! Something went wrong.",
+        //   description: error.message,
+        //   action: (
+        //     <ToastAction
+        //       altText="Try again"
+        //       onClick={() => {
+        //         window.location.reload();
+        //       }}
+        //     >
+        //       Try again
+        //     </ToastAction>
+        //   ),
+        // });
       }
     };
     fetchData();
@@ -140,16 +141,18 @@ const DBUpcomingAppointments = () => {
 
   console.log(upcomingAppointments, "upcomingAppointments");
   return (
-    <div className="w-full h-[360px]">
-      {upcomingAppointments.length > 0 ? (
-        <div className="w-full border-[1px] border-[#E4E4E7] py-3 select-none px-5 bg-white flex flex-col justify-between h-full rounded-[5px]">
+    <div className="h-[360px] w-full">
+      {isLoading ? (
+        <DBUpcomingLoader />
+      ) : upcomingAppointments.length > 0 ? (
+        <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
           <div>
             <div className="">
               <p className="p-title !font-medium">
                 Upcoming Appointment
                 <span>{upcomingAppointments.length > 1 ? "s" : ""}</span>
               </p>
-              <p className="font-normal sub-title text-[15px] pt-3 mb-3">
+              <p className="sub-title mb-3 pt-3 text-[15px] font-normal">
                 Total of {totalUpcoming} upcoming appointment
                 <span>{upcomingAppointments.length > 1 ? "s" : ""}</span>
               </p>
@@ -158,12 +161,12 @@ const DBUpcomingAppointments = () => {
               {upcomingAppointments.map((upcomingAppointment, index) => (
                 <div
                   key={index}
-                  className="w-full flex flex-row h-[70px] mb-1 px-2 rounded-md hover:bg-[#F4F4F4] cursor-pointer justify-between gap-[13px]"
+                  className="mb-1 flex h-[70px] w-full cursor-pointer flex-row justify-between gap-[13px] rounded-md px-2 hover:bg-[#F4F4F4]"
                 >
-                  <div className="w-3/4 flex items-center gap-[10px]">
+                  <div className="flex w-3/4 items-center gap-[10px]">
                     {patientAppointmentImages.some(
                       (image) =>
-                        image.patientUuid === upcomingAppointment.patient_uuid
+                        image.patientUuid === upcomingAppointment.patient_uuid,
                     ) ? (
                       // Render the matched image
                       <div>
@@ -176,9 +179,9 @@ const DBUpcomingAppointments = () => {
                               <div key={imgIndex}>
                                 {image.data ? (
                                   // Render the image if data is not empty
-                                  <div className=" min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px]">
+                                  <div className="max-h-[45px] min-h-[45px] min-w-[45px] max-w-[45px]">
                                     <Image
-                                      className="rounded-full object-cover w-12 h-12"
+                                      className="h-12 w-12 rounded-full object-cover"
                                       src={image.data} // Use the base64-encoded image data directly
                                       alt=""
                                       width={45}
@@ -188,7 +191,7 @@ const DBUpcomingAppointments = () => {
                                 ) : (
                                   // Render the stock image (.svg) if data is empty
                                   <Image
-                                    className="rounded-full min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px]"
+                                    className="max-h-[45px] min-h-[45px] min-w-[45px] max-w-[45px] rounded-full"
                                     src="/imgs/user-no-icon.svg"
                                     alt=""
                                     width={45}
@@ -205,7 +208,7 @@ const DBUpcomingAppointments = () => {
                       // Render a placeholder image if no matching image found
                       <div>
                         <Image
-                          className="rounded-full min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px]"
+                          className="max-h-[45px] min-h-[45px] min-w-[45px] max-w-[45px] rounded-full"
                           src="/imgs/loading.gif" // Show loading gif while fetching images
                           alt="Loading"
                           width={45}
@@ -215,7 +218,7 @@ const DBUpcomingAppointments = () => {
                     )}
                     <div className="flex w-4/6">
                       <div className="flex flex-col justify-center gap-1 truncate">
-                        <p className=" text-[15px] w-full">
+                        <p className="w-full text-[15px]">
                           <ResuableTooltip
                             text={`${
                               upcomingAppointment.patient_firstName
@@ -227,21 +230,21 @@ const DBUpcomingAppointments = () => {
                               {upcomingAppointment.patient_middleName}
                               {upcomingAppointment.patient_lastName} */}
                         </p>
-                        <p className="f-pending font-normal text-[15px]">
+                        <p className="f-pending text-[15px] font-normal">
                           Pending
                         </p>
                       </div>
                     </div>
                   </div>
-                  <div className="w-1/4 flex flex-col justify-center items-end text-end gap-1">
-                    <p className="font-medium text-[15px] flex">
+                  <div className="flex w-1/4 flex-col items-end justify-center gap-1 text-end">
+                    <p className="flex text-[15px] font-medium">
                       {formatDate(
-                        upcomingAppointment.appointments_appointmentDate
+                        upcomingAppointment.appointments_appointmentDate,
                       )}
                     </p>
-                    <p className="  sub-title ml-4">
+                    <p className="sub-title ml-4">
                       {formatTime(
-                        upcomingAppointment.appointments_appointmentTime
+                        upcomingAppointment.appointments_appointmentTime,
                       )}
                     </p>
                   </div>
@@ -254,11 +257,11 @@ const DBUpcomingAppointments = () => {
               setIsLoading(true);
               router.push("/appointments");
             }}
-            className="group flex w-fit cursor-pointer items-center hover:text-[#007C85] font-semibold text-[15px] opacity-50 hover:opacity-100 text-[#151518] mt-2"
+            className="group mt-2 flex w-fit cursor-pointer items-center text-[15px] font-semibold text-[#151518] opacity-50 hover:text-[#007C85] hover:opacity-100"
           >
             SEE ALL UPCOMING APPOINTMENTS
             <svg
-              className="text-[#71717A] ml-2 group-hover:text-[#007C85]"
+              className="ml-2 text-[#71717A] group-hover:text-[#007C85]"
               width="17"
               height="14"
               viewBox="0 0 10 17"
@@ -276,7 +279,19 @@ const DBUpcomingAppointments = () => {
           </div>
         </div>
       ) : (
-        <DBUpcomingLoader />
+        <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
+          <div className="h-full w-full">
+            <div className="flex flex-col">
+              <p className="p-title !font-medium">Upcoming Appointments</p>
+              <p className="sub-title mb-3 pt-3 text-[15px] font-normal">
+                Total of 0 upcoming appointments
+              </p>
+            </div>
+          </div>
+          <div className="sub-title absolute -ml-2 flex h-full w-full items-center justify-center">
+            no data yet
+          </div>
+        </div>
       )}
     </div>
   );

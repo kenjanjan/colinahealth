@@ -19,7 +19,6 @@ import {
   EditProvider,
   useEditContext,
 } from "@/app/(routes)/patient-overview/[id]/editContext";
-import LoadingGif from "./loaders/LoadingGif";
 
 export default function PatientOverviewComponent() {
   const { isEdit, isSave, toggleEdit, disableEdit } = useEditContext();
@@ -306,7 +305,7 @@ export default function PatientOverviewComponent() {
     }
   };
   return (
-    <div className="flex flex-col gap-[3px]">
+    <div className="flex flex-col gap-[3px] w-full">
       <div className="p-title pb-2">
         <h1>Patient Overview</h1>
       </div>

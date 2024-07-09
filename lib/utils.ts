@@ -53,7 +53,7 @@ export function formatTime(timeString: string) {
   return time.toFormat("h:mm a");
 }
 
-export async function print(jsonFile: any, props: any, variant: string) {
+export async function downloadPdf(jsonFile: any, props: any, variant: string) {
   const doc = new jsPDF();
 
   const columns = props.map((prop: any) => ({ header: prop, dataKey: prop }));
@@ -79,3 +79,4 @@ export async function print(jsonFile: any, props: any, variant: string) {
   // Save the PDF
   doc.save(`${variant}.pdf`);
 }
+

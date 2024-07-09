@@ -15,13 +15,18 @@ interface DBDueMedicationProps {
   totalDone: number;
   setTotalDone: (totalDone: number) => void;
 }
-const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,setTotalDone}:DBDueMedicationProps) => {
+const DBDueMedication = ({
+  totalDueMedication,
+  setTotalDueMedication,
+  totalDone,
+  setTotalDone,
+}: DBDueMedicationProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [dueMedSortBy, setDueMedSortBy] = useState(
-    "medicationlogs.medicationLogsTime"
+    "medicationlogs.medicationLogsTime",
   );
   const [sortOrder, setSortOrder] = useState("ASC");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -41,9 +46,10 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
   >([]);
   const [dueMedTotalPages, setDueMedTotalPages] = useState(0);
 
-  console.log(totalDone,'totalDone')
+  console.log(totalDone, "totalDone");
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const dueMedicationList = await fetchDueMedication(
           term,
@@ -51,7 +57,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
           dueMedSortBy,
           sortOrder as "ASC" | "DESC",
           3,
-          router
+          router,
         );
 
         // Filter data by distinct medicationLogsName for each patient
@@ -61,7 +67,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
             currentItem: {
               patient_uuid: string;
               medicationlogs_medicationLogsName: string;
-            }
+            },
           ) => {
             const key = `${currentItem.patient_uuid}-${currentItem.medicationlogs_medicationLogsName}`;
             if (!acc[key]) {
@@ -69,7 +75,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
             }
             return acc;
           },
-          {}
+          {},
         );
 
         const filteredArray: {
@@ -85,8 +91,8 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
 
         const uniquePatientUuids = new Set(
           dueMedicationList.data.map(
-            (patient: { patient_uuid: any }) => patient.patient_uuid
-          )
+            (patient: { patient_uuid: any }) => patient.patient_uuid,
+          ),
         );
 
         const patientUuids = Array.from(uniquePatientUuids);
@@ -97,7 +103,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
         setTotalDone(dueMedicationList.totalDone);
         setIsLoading(false);
         const profileImagesResponse = await fetchProfileImages(
-          patientUuids as string[]
+          patientUuids as string[],
         );
         if (profileImagesResponse) {
           const patientImagesData = profileImagesResponse.map((image: any) => {
@@ -105,7 +111,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
             if (image.data) {
               const buffer = Buffer.from(image.data);
               const dataUrl = `data:image/jpeg;base64,${buffer.toString(
-                "base64"
+                "base64",
               )}`;
               return {
                 patientUuid: image.patientUuid,
@@ -159,16 +165,18 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
   };
 
   return (
-    <div className="w-full h-[360px]">
-      {dueMedicationList.length > 0 ? (
-        <div className="w-full border-[1px] border-[#E4E4E7] py-3 select-none px-5 bg-white flex flex-col justify-between h-full rounded-[5px]">
+    <div className="h-[360px] w-full">
+      {isLoading ? (
+        <DBDueMedicationLoader />
+      ) : dueMedicationList.length > 0 ? (
+        <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
           <div className="h-full">
-            <div className="flex flex-col ">
+            <div className="flex flex-col">
               <p className="p-title !font-medium">
                 Due Medication
                 <span>{dueMedicationList.length > 1 ? "s" : ""}</span>
               </p>
-              <p className="font-normal sub-title text-[15px] pt-3 mb-3 ">
+              <p className="sub-title mb-3 pt-3 text-[15px] font-normal">
                 Total of {totalDueMedication} due medication
                 <span>{dueMedicationList.length > 1 ? "s" : ""}</span>
               </p>
@@ -177,13 +185,13 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
               {dueMedicationList.map((dueMedication, index) => (
                 <div
                   key={index}
-                  className="w-full flex flex-row h-[70px] mb-1 px-2 rounded-md hover:bg-[#F4F4F4] cursor-pointer justify-between gap-[13px]"
+                  className="mb-1 flex h-[70px] w-full cursor-pointer flex-row justify-between gap-[13px] rounded-md px-2 hover:bg-[#F4F4F4]"
                 >
                   <div className="flex w-3/4">
-                    <div className="flex mr-3 items-center ">
+                    <div className="mr-3 flex items-center">
                       {patientDueMedImages.some(
                         (image) =>
-                          image.patientUuid === dueMedication.patient_uuid
+                          image.patientUuid === dueMedication.patient_uuid,
                       ) ? (
                         // Render the matched image
                         <div>
@@ -195,9 +203,9 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
                                 <div key={imgIndex}>
                                   {image.data ? (
                                     // Render the image if data is not empty
-                                    <div className=" min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px]">
+                                    <div className="max-h-[45px] min-h-[45px] min-w-[45px] max-w-[45px]">
                                       <Image
-                                        className="rounded-full object-cover w-12 h-12"
+                                        className="h-12 w-12 rounded-full object-cover"
                                         src={image.data} // Use the base64-encoded image data directly
                                         alt=""
                                         width={45}
@@ -207,7 +215,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
                                   ) : (
                                     // Render the stock image (.svg) if data is empty
                                     <Image
-                                      className="rounded-full min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px]"
+                                      className="max-h-[45px] min-h-[45px] min-w-[45px] max-w-[45px] rounded-full"
                                       src="/imgs/user.png"
                                       alt=""
                                       width={45}
@@ -224,7 +232,7 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
                         // Render a placeholder image if no matching image found
                         <div>
                           <Image
-                            className="rounded-full min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px]"
+                            className="max-h-[45px] min-h-[45px] min-w-[45px] max-w-[45px] rounded-full"
                             src="/imgs/loading.gif" // Show loading gif while fetching images
                             alt="Loading"
                             width={45}
@@ -234,15 +242,15 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
                       )}
                     </div>
                     <div className="flex w-4/6">
-                      <div className="flex flex-col justify-center gap-1 w-full">
-                        <p className=" text-[15px] truncate hover:text-wrap">
+                      <div className="flex w-full flex-col justify-center gap-1">
+                        <p className="truncate text-[15px] hover:text-wrap">
                           <ResuableTooltip
                             text={`${dueMedication.patient_firstName}${" "}${
                               dueMedication.patient_middleName
                             }${" "}${dueMedication.patient_lastName}`}
                           />
                         </p>
-                        <p className="text-[#71717A] font-normal sub-title ">
+                        <p className="sub-title font-normal text-[#71717A]">
                           <ResuableTooltip
                             text={
                               dueMedication.medicationlogs_medicationLogsName
@@ -252,15 +260,15 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
                       </div>
                     </div>
                   </div>
-                  <div className="w-1/4  flex flex-col justify-center items-end text-end gap-1">
-                    <p className="font-semibold text-[15px] flex">
+                  <div className="flex w-1/4 flex-col items-end justify-center gap-1 text-end">
+                    <p className="flex text-[15px] font-semibold">
                       {formatDate(
-                        dueMedication.medicationlogs_medicationLogsDate
+                        dueMedication.medicationlogs_medicationLogsDate,
                       )}
                     </p>
-                    <p className="font-medium sub-title ml-4">
+                    <p className="sub-title ml-4 font-medium">
                       {formatTime(
-                        dueMedication.medicationlogs_medicationLogsTime
+                        dueMedication.medicationlogs_medicationLogsTime,
                       )}
                     </p>
                   </div>
@@ -274,11 +282,11 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
               setIsLoading(true);
               router.push("/due-medications");
             }}
-            className="group flex w-fit cursor-pointer items-center hover:text-[#007C85] font-semibold text-[15px] opacity-50 hover:opacity-100 text-[#151518] mt-2"
+            className="group mt-2 flex w-fit cursor-pointer items-center text-[15px] font-semibold text-[#151518] opacity-50 hover:text-[#007C85] hover:opacity-100"
           >
             SEE ALL DUE
             <svg
-              className="text-[#71717A] ml-2 group-hover:text-[#007C85]"
+              className="ml-2 text-[#71717A] group-hover:text-[#007C85]"
               width="17"
               height="14"
               viewBox="0 0 10 17"
@@ -296,7 +304,21 @@ const DBDueMedication = ({totalDueMedication,setTotalDueMedication,totalDone,set
           </div>
         </div>
       ) : (
-        <DBDueMedicationLoader />
+        <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
+          <div className="h-full w-full">
+            <div className="flex flex-col">
+              <p className="p-title !font-medium">
+                Due Medication
+                <span>{dueMedicationList.length > 1 ? "s" : ""}</span>
+              </p>
+              <p className="sub-title mb-3 pt-3 text-[15px] font-normal">
+                Total of {totalDueMedication} due medication
+                <span>{dueMedicationList.length > 1 ? "s" : ""}</span>
+              </p>
+            </div>
+          </div>
+          <div className="absolute flex h-full w-full items-center justify-center -ml-2 sub-title">no data yet</div>
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,4 @@
-import { EditProvider } from "./editContext";
-import PatientOverviewComponent from "@/components/patientOverview";
+import PatientOverviewPage from "@/components/patientOverviewPage";
 
 export default function PatientOverviewLayout({
   children,
@@ -7,13 +6,8 @@ export default function PatientOverviewLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col w-full px-[150px] pt-[90px] h-full">
-      <EditProvider>
-        <PatientOverviewComponent />
-        <div className="w-full flex items-center justify-center mt-4 h-full">
-          {children}
-        </div>
-      </EditProvider>
+    <div className="flex h-screen relative w-full">
+      <PatientOverviewPage children={children}/>
     </div>
   );
 }
