@@ -39,7 +39,8 @@ export const Navbar = (
   const [id, setId] = useState(selectedPatientId);
   const [filteredPatient, setFilteredPatient] = useState<Tabs[]>([]);
   const [isFocused, setIsFocused] = useState(false);
-  const globalSearchRef = useRef<HTMLInputElement>(null);
+
+  // const globalSearchRef = useRef<HTMLInputElement>(null);
   const [searchData, setSearchData] = useState([
     {
       firstName: "",
@@ -345,10 +346,11 @@ export const Navbar = (
     setShowGlobalSearch(true);
     setIsAnimate(true);
     // setIsFocused(true);
-    if (globalSearchRef.current) {
-      globalSearchRef.current.focus();
-    }
+    // if (globalSearchRef.current) {
+    //   globalSearchRef.current.focus();
+    // }
   };
+  
 
   return (
     <div className="fixed z-10 flex h-[70px] w-full items-center justify-between bg-[#007C85] px-[154px] text-[15px] font-medium">
@@ -415,20 +417,22 @@ export const Navbar = (
                   alt="search"
                   className="absolute ml-3 cursor-pointer fill-white"
                 /> */}
-                <SearchIconDynamic
-                  className={`absolute ml-3 cursor-pointer ${isFocused ? "fill-[#020817]" : "fill-[#64748B]"}`}
-                  w={14}
-                  h={14}
-                />
+                
                 <input
-                  type="text"
-                  ref={globalSearchRef}
-                  className="ml-9 h-full w-full appearance-none rounded-sm text-[15px] text-[#020817] outline-none"
+                          
+                  className="h-full w-full pl-9  appearance-none rounded-sm text-[15px] text-[#020817] outline-none"
                   placeholder="Search by Keyword"
                   value={searchValue}
+                  autoFocus
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   onChange={(e) => handleSearchChange(e)}
+                />
+                <SearchIconDynamic
+                  className={`absolute left-3 pointer-events-none ${isFocused ? "fill-[#020817]" : "fill-[#64748B]"}`}
+                  w={14}
+                  h={14}
+           
                 />
               </div>
               {searchValue && (
