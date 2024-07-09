@@ -177,14 +177,14 @@ const NurseDrawer = () => {
       {" "}
       <Drawer direction="right">
         <DrawerTrigger className="font-semibold">
-          <div className="w-[195px] h-[52px] justify-center rounded-[5px] cursor-pointer text-white border-[1.76px] p-2 hover:bg-[#0E646A] hover:border-[#D0D5DD] hover:text-[#020817] bg-[#007C85] group border-[#007C85] flex items-center text-[15px] font-bold gap-[4px]">
+          <div className="w-[195px] h-[52px] justify-center rounded-[5px] cursor-pointer text-white border-[1.76px] p-2 hover:bg-[#0E646A] hover:border-[#D0D5DD]  bg-[#007C85] group border-[#007C85] flex items-center text-[15px] font-bold gap-[4px]">
             <div className="group">
             <Image
               src="/icons/plus-icon-white.svg"
               alt="add"
               width={18}
               height={18}
-              className="h-[18px] w-[18px] group-hover:invert"
+              className="h-[18px] w-[18px] "
             />
             </div>
             Nurse's Note
