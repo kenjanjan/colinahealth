@@ -8,9 +8,10 @@ import NavBarDropdown from "./shared/navbardropdown";
 import { getAccessToken } from "@/app/api/login-api/accessToken";
 import Link from "next/link";
 import { searchPatientList } from "@/app/api/patients-api/patientList.api";
-import { CornerDownRightIcon } from "lucide-react";
+// import { CornerDownRightIcon } from "lucide-react";
 import { selectPatient } from "@/app/api/patients-api/patientSelect.api";
-
+import SearchIconDynamic from "@/components/reusable/searchSvgColor";
+import searchIcon from "@/public/icons/search-icon.svg";
 interface Tabs {
   firstName: string;
   lastName: string;
@@ -37,7 +38,8 @@ export const Navbar = (
   const [selectedPatientId, setSelectedPatientId] = useState("");
   const [id, setId] = useState(selectedPatientId);
   const [filteredPatient, setFilteredPatient] = useState<Tabs[]>([]);
-
+  const [isFocused, setIsFocused] = useState(false);
+  const globalSearchRef = useRef<HTMLInputElement>(null);
   const [searchData, setSearchData] = useState([
     {
       firstName: "",
@@ -54,12 +56,12 @@ export const Navbar = (
 
     let filteredPatient: any = [];
 
- // search for firstname or full name
+    // search for firstname or full name
     if (searchTerms.length > 0) {
       filteredPatient = searchData.filter((patient) => {
-        const firstNameTerm = searchTerms.slice(0, -1).join(' ');
+        const firstNameTerm = searchTerms.slice(0, -1).join(" ");
         const lastNameTerm = searchTerms[searchTerms.length - 1];
-        const fullNameTerm = searchTerms.join(' ');
+        const fullNameTerm = searchTerms.join(" ");
 
         const firstName = patient.firstName.toLowerCase();
         const lastName = patient.lastName.toLowerCase();
@@ -69,38 +71,37 @@ export const Navbar = (
 
         // Check if the combined search terms are present in the full name
         const result =
-          (`${firstName}`.includes(firstNameTerm) && `${lastName}`.includes(lastNameTerm)) ||
-          (`${firstName}`.includes(fullNameTerm) || `${lastName}`.includes(fullNameTerm))||
+          (`${firstName}`.includes(firstNameTerm) &&
+            `${lastName}`.includes(lastNameTerm)) ||
+          `${firstName}`.includes(fullNameTerm) ||
+          `${lastName}`.includes(fullNameTerm) ||
           `${firstName} ${lastName}` === fullNameTerm ||
           `${firstName}${lastName}` === fullNameTerm;
 
         console.log("result", result);
         return result;
       });
-    }
-    else{
+    } else {
       for (const word of searchTerms) {
         filteredPatient = searchData.filter((patient) => {
-          const fullNameTerm = searchTerms.join(' ');
-  
+          const fullNameTerm = searchTerms.join(" ");
+
           const firstName = patient.firstName.toLowerCase();
           const lastName = patient.lastName.toLowerCase();
           console.log(fullNameTerm, "combined first");
           console.log(firstName, "first");
           console.log(lastName, "lastName first");
-  
+
           // Check if the combined search terms are present in the full name
           const result =
-       
-            `${firstName}`.includes(word) ||
-            `${firstName}`.includes(word)
-  
+            `${firstName}`.includes(word) || `${firstName}`.includes(word);
+
           console.log("result", result);
           return result;
         });
       }
     }
-  // Stage 3: Check if the UUID includes the search term
+    // Stage 3: Check if the UUID includes the search term
     if (filteredPatient.length === 0) {
       filteredPatient = searchData.filter((patient) => {
         const uuid = patient.uuid.toLowerCase();
@@ -116,7 +117,7 @@ export const Navbar = (
 
     // if (filteredPatient.length > 0) {
     //   filteredPatient = searchData.filter((patient) => {
-        
+
     //     const firstName = patient.firstName.toLowerCase();
     //     const lastName = patient.lastName.toLowerCase();
     //     const combinedNames = searchTerms.join(" ");
@@ -148,7 +149,6 @@ export const Navbar = (
     //   console.log("No result found");
     // }
     setFilteredPatient(filteredPatient);
-
   };
 
   const handleTabClick = (url: string, isActive: boolean) => {
@@ -344,6 +344,10 @@ export const Navbar = (
   const handleSearchClick = () => {
     setShowGlobalSearch(true);
     setIsAnimate(true);
+    // setIsFocused(true);
+    if (globalSearchRef.current) {
+      globalSearchRef.current.focus();
+    }
   };
 
   return (
@@ -402,119 +406,72 @@ export const Navbar = (
           {showGlobalSearch && (
             <>
               <div
-                className={`global-search relative flex h-[40px] items-center rounded-lg bg-white shadow-md transition duration-300 ${isAnimate ? "animate" : "animate-close"}`}
+                className={`global-search relative flex h-[40px] items-center rounded-sm bg-white shadow-md transition duration-300 ${isAnimate ? "animate" : "animate-close"}`}
               >
-                <Image
-                  src="/icons/search-icon.svg"
-                  width={15}
-                  height={15}
+                {/* <Image
+                  src={searchIcon}
+                  width={14}
+                  height={14}
                   alt="search"
-                  className="absolute ml-2 cursor-pointer"
+                  className="absolute ml-3 cursor-pointer fill-white"
+                /> */}
+                <SearchIconDynamic
+                  className={`absolute ml-3 cursor-pointer ${isFocused ? "fill-[#020817]" : "fill-[#64748B]"}`}
+                  w={14}
+                  h={14}
                 />
                 <input
                   type="text"
-                  className="ml-7 h-full w-full appearance-none rounded-lg outline-none"
-                  placeholder="Search for patient names or id..."
+                  ref={globalSearchRef}
+                  className="ml-9 h-full w-full appearance-none rounded-sm text-[15px] text-[#020817] outline-none"
+                  placeholder="Search by Keyword"
                   value={searchValue}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
                   onChange={(e) => handleSearchChange(e)}
                 />
               </div>
               {searchValue && (
                 <div
-                  className={`global-search bottom-[-300px] h-[310px] w-full truncate rounded-sm bg-white p-[10px] shadow-md ${
-                    isAnimate ? " " : "animate-close"
+                  className={`global-search w-full truncate rounded-sm bg-white p-[10px] shadow-md ${isAnimate ? "" : "animate-close"} ${
+                    filteredPatient.length > 0
+                      ? "top-[60px] h-[310px]"
+                      : "top-[60px] h-full"
+                    // "bottom-[-200px] h-[60px] flex items-center justify-center"
                   }`}
                 >
-                  <div className="flex h-full w-full flex-col gap-[8px] overflow-y-scroll">
-                    {tabsUrls.map((tab, index) => (
-                      <div key={index} className="flex flex-col gap-[8px]">
-                        <p
-                          className="mr-2 flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
-                          key={index}
-                        >
-                          <span>{tab.label}</span>
-                          <span className="italic">TAB</span>
-                        </p>
-                        {!tab.url ? (
-                          <>
-                            {tab.subTab && (
+                  <>
+                    {filteredPatient.length > 0 ? (
+                      <div className="flex h-full w-full flex-col overflow-y-scroll">
+                        {tabsUrls.map((tab, index) => (
+                          <div key={index} className="flex flex-col gap-[8px]">
+                            <p
+                              className="mr-2 flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
+                              key={index}
+                            >
+                              <span className="ml-1">{tab.label}</span>
+                              {/* <span className="italic">TAB</span> */}
+                            </p>
+                            {!tab.url ? (
                               <>
-                                {tab.subTab.map((sub, subIndex) => (
-                                  <div key={subIndex}>
-                                    <div
-                                      className="mr-2 flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
-                                      key={index}
-                                    >
-                                      <div className="flex gap-[10px]">
-                                        <CornerDownRightIcon
-                                          width={20}
-                                          height={20}
-                                        />
-                                        <p>{sub.label}</p>
-                                      </div>
-                                      <p className="italic">SUBTAB</p>
-                                    </div>
-
-                                    {filteredPatient.map((patient, index) => (
-                                      <p
-                                        onClick={() => {
-                                          onPatientClick(
-                                            patient.uuid,
-                                            tab.subTab[0]?.url,
-                                          );
-                                        }}
-                                        key={index}
-                                        data-uuid={patient.uuid}
-                                        className="flex cursor-pointer justify-between bg-white p-[10px] pl-[40px] hover:bg-[#D9D9D933]"
-                                      >
-                                        <span>
-                                          {patient.lastName} {patient.firstName}
-                                        </span>
-                                        <span>{patient.uuid}</span>
-                                      </p>
-                                    ))}
-                                  </div>
-                                ))}
-                              </>
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {filteredPatient.map((patient, index) => (
-                              <p
-                                onClick={() => {
-                                  onPatientClick(patient.uuid, tab.url);
-                                }}
-                                key={index}
-                                data-uuid={patient.uuid}
-                                className="flex cursor-pointer justify-between bg-white p-[10px] hover:bg-[#D9D9D933]"
-                              >
-                                <span>
-                                  {patient.lastName} {patient.firstName}
-                                </span>
-                                <span>{patient.uuid}</span>
-                              </p>
-                            ))}
-
-                            {tab.subTab && (
-                              <>
-                                {tab.url && (
+                                {tab.subTab && (
                                   <>
                                     {tab.subTab.map((sub, subIndex) => (
                                       <div key={subIndex}>
                                         <div
-                                          className="flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
+                                          className="mr-2 flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
                                           key={index}
                                         >
-                                          <div className="flex gap-[10px]">
-                                            <CornerDownRightIcon
-                                              width={20}
-                                              height={20}
+                                          <div className="ml-2 flex gap-[10px]">
+                                            <Image
+                                              src="/icons/globalsearch-arrow.svg"
+                                              alt="cornerarrowdown"
+                                              width={18}
+                                              height={10}
                                             />
                                             <p>{sub.label}</p>
                                           </div>
-
-                                          <p className="italic">SUBTAB</p>
+                                          {/* <p className="italic">SUBTAB</p> */}
                                         </div>
 
                                         {filteredPatient.map(
@@ -531,8 +488,8 @@ export const Navbar = (
                                               className="flex cursor-pointer justify-between bg-white p-[10px] pl-[40px] hover:bg-[#D9D9D933]"
                                             >
                                               <span>
-                                                {patient.lastName}{" "}
-                                                {patient.firstName}
+                                                {patient.firstName}{" "}
+                                                {patient.lastName}
                                               </span>
                                               <span>{patient.uuid}</span>
                                             </p>
@@ -543,12 +500,90 @@ export const Navbar = (
                                   </>
                                 )}
                               </>
+                            ) : (
+                              <>
+                                {filteredPatient.map((patient, index) => (
+                                  <p
+                                    onClick={() => {
+                                      onPatientClick(patient.uuid, tab.url);
+                                    }}
+                                    key={index}
+                                    data-uuid={patient.uuid}
+                                    className="flex cursor-pointer justify-between bg-white p-[10px] hover:bg-[#D9D9D933]"
+                                  >
+                                    <span>
+                                      {patient.lastName} {patient.firstName}
+                                    </span>
+                                    <span>{patient.uuid}</span>
+                                  </p>
+                                ))}
+
+                                {tab.subTab && (
+                                  <>
+                                    {tab.url && (
+                                      <>
+                                        {tab.subTab.map((sub, subIndex) => (
+                                          <div key={subIndex}>
+                                            <div
+                                              className="flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
+                                              key={index}
+                                            >
+                                              <div className="flex gap-[10px]">
+                                                <Image
+                                                  src="/icons/globalsearch-arrow.svg"
+                                                  alt="cornerarrowdown"
+                                                  width={20}
+                                                  height={20}
+                                                />
+                                                <p>{sub.label}</p>
+                                              </div>
+
+                                              <p className="italic">SUBTAB</p>
+                                            </div>
+
+                                            {filteredPatient.map(
+                                              (patient, index) => (
+                                                <p
+                                                  onClick={() => {
+                                                    onPatientClick(
+                                                      patient.uuid,
+                                                      tab.subTab[0]?.url,
+                                                    );
+                                                  }}
+                                                  key={index}
+                                                  data-uuid={patient.uuid}
+                                                  className="flex cursor-pointer justify-between bg-white p-[10px] pl-[40px] hover:bg-[#D9D9D933]"
+                                                >
+                                                  <span>
+                                                    {patient.lastName}{" "}
+                                                    {patient.firstName}
+                                                  </span>
+                                                  <span>{patient.uuid}</span>
+                                                </p>
+                                              ),
+                                            )}
+                                          </div>
+                                        ))}
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </>
                             )}
-                          </>
-                        )}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    ) : (
+                      <div className="">
+                        <div className="flex h-[50px] w-full flex-col items-center justify-center">
+                        <p className="uppercase text-[#64748B]">
+                          No Results Found
+                        </p>
+                        </div>
+                      
+                      </div>
+                    )}
+                  </>
                 </div>
               )}
             </>
