@@ -184,7 +184,7 @@ const NurseDrawer = () => {
               alt="add"
               width={18}
               height={18}
-              className="h-[18px] w-[18px] "
+              className="h-[18px] w-[18px] group-hover:invert"
             />
             </div>
             Nurse's Note
