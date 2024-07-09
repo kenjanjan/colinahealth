@@ -19,7 +19,6 @@ import {
   EditProvider,
   useEditContext,
 } from "@/app/(routes)/patient-overview/[id]/editContext";
-import LoadingGif from "./loaders/LoadingGif";
 
 export default function PatientOverviewComponent() {
   const { isEdit, isSave, toggleEdit, disableEdit } = useEditContext();

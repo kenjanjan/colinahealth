@@ -79,3 +79,4 @@ export async function downloadPdf(jsonFile: any, props: any, variant: string) {
   // Save the PDF
   doc.save(`${variant}.pdf`);
 }
+
