@@ -17,11 +17,13 @@ interface Tabs {
   uuid: string;
 }
 
-export const Navbar = ({
-  // setIsLoading,
-}: {
-  // setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+export const Navbar = (
+  {
+    // setIsLoading,
+  }: {
+    // setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  },
+) => {
   const router = useRouter();
 
   const [isActive, setIsActive] = useState(false);
@@ -36,16 +38,117 @@ export const Navbar = ({
   const [id, setId] = useState(selectedPatientId);
   const [filteredPatient, setFilteredPatient] = useState<Tabs[]>([]);
 
+  const [searchData, setSearchData] = useState([
+    {
+      firstName: "",
+      lastName: "",
+      uuid: "",
+    },
+  ]);
   const handleSearchChange = (e: { target: { value: any } }) => {
     const value = e.target.value;
     setSearchValue(value);
-    const filteredPatient: Tabs[] = searchData.filter(
-      (patient) =>
-        patient.firstName.toLowerCase().startsWith(value.toLowerCase()) ||
-        patient.lastName.toLowerCase().startsWith(value.toLowerCase()) ||
-        patient.uuid.toLowerCase().startsWith(value.toLowerCase())
-    );
+
+    const searchTerms = value.trim().toLowerCase().split(/\s+/);
+    console.log("searchterms", searchTerms);
+
+    let filteredPatient: any = [];
+
+ // search for firstname or full name
+    if (searchTerms.length > 0) {
+      filteredPatient = searchData.filter((patient) => {
+        const firstNameTerm = searchTerms.slice(0, -1).join(' ');
+        const lastNameTerm = searchTerms[searchTerms.length - 1];
+        const fullNameTerm = searchTerms.join(' ');
+
+        const firstName = patient.firstName.toLowerCase();
+        const lastName = patient.lastName.toLowerCase();
+        console.log(fullNameTerm, "combined first");
+        console.log(firstName, "first");
+        console.log(lastName, "lastName first");
+
+        // Check if the combined search terms are present in the full name
+        const result =
+          (`${firstName}`.includes(firstNameTerm) && `${lastName}`.includes(lastNameTerm)) ||
+          (`${firstName}`.includes(fullNameTerm) || `${lastName}`.includes(fullNameTerm))||
+          `${firstName} ${lastName}` === fullNameTerm ||
+          `${firstName}${lastName}` === fullNameTerm;
+
+        console.log("result", result);
+        return result;
+      });
+    }
+    else{
+      for (const word of searchTerms) {
+        filteredPatient = searchData.filter((patient) => {
+          const fullNameTerm = searchTerms.join(' ');
+  
+          const firstName = patient.firstName.toLowerCase();
+          const lastName = patient.lastName.toLowerCase();
+          console.log(fullNameTerm, "combined first");
+          console.log(firstName, "first");
+          console.log(lastName, "lastName first");
+  
+          // Check if the combined search terms are present in the full name
+          const result =
+       
+            `${firstName}`.includes(word) ||
+            `${firstName}`.includes(word)
+  
+          console.log("result", result);
+          return result;
+        });
+      }
+    }
+  // Stage 3: Check if the UUID includes the search term
+    if (filteredPatient.length === 0) {
+      filteredPatient = searchData.filter((patient) => {
+        const uuid = patient.uuid.toLowerCase();
+
+        return searchTerms.some((term: any) => uuid.includes(term));
+      });
+    }
+
+    // If no matches, log "No result found"
+    if (filteredPatient.length === 0) {
+      console.log("No result found");
+    }
+
+    // if (filteredPatient.length > 0) {
+    //   filteredPatient = searchData.filter((patient) => {
+        
+    //     const firstName = patient.firstName.toLowerCase();
+    //     const lastName = patient.lastName.toLowerCase();
+    //     const combinedNames = searchTerms.join(" ");
+    //     console.log(combinedNames, "combined first");
+    //     console.log(firstName, "first");
+    //     console.log(lastName, "lastName first");
+
+    //     // Check if the combined search terms are present in the full name
+    //     const result =
+    //       `${firstName} ${lastName}` === combinedNames ||
+    //       `${firstName}${lastName}` === combinedNames;
+
+    //     console.log("result", result);
+    //     return result;
+    //   });
+    // }
+
+    // // Stage 3: Check if the UUID includes the search term
+    // if (filteredPatient.length === 0) {
+    //   filteredPatient = searchData.filter((patient) => {
+    //     const uuid = patient.uuid.toLowerCase();
+
+    //     return searchTerms.some((term: any) => uuid.includes(term));
+    //   });
+    // }
+
+    // // If no matches, log "No result found"
+    // if (filteredPatient.length === 0) {
+    //   console.log("No result found");
+    // }
     setFilteredPatient(filteredPatient);
+
   };
 
   const handleTabClick = (url: string, isActive: boolean) => {
@@ -75,14 +178,6 @@ export const Navbar = ({
       url: "/chart",
     },
   ];
-
-  const [searchData, setSearchData] = useState([
-    {
-      firstName: "",
-      lastName: "",
-      uuid: "",
-    },
-  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -196,7 +291,7 @@ export const Navbar = ({
         setDropdownOpen(false);
       }
     },
-    [dropdownOpen]
+    [dropdownOpen],
   );
 
   useEffect(() => {
@@ -223,7 +318,7 @@ export const Navbar = ({
         }, 300);
       }
     },
-    [showGlobalSearch]
+    [showGlobalSearch],
   );
 
   useEffect(() => {
@@ -252,14 +347,14 @@ export const Navbar = ({
   };
 
   return (
-    <div className="fixed bg-[#007C85] w-full h-[70px] flex items-center justify-between px-[154px] z-10 font-medium text-[15px]">
+    <div className="fixed z-10 flex h-[70px] w-full items-center justify-between bg-[#007C85] px-[154px] text-[15px] font-medium">
       <Link href="/dashboard" shallow>
         <Image
           src={"/icons/colinahealth-logo.png"}
           alt={""}
           width={213}
           height={50}
-          className="cursor-pointer w-[213px] h-[26px]"
+          className="h-[26px] w-[213px] cursor-pointer"
           onClick={(event) => {
             if (pathname === "/dashboard") {
               event.preventDefault();
@@ -269,13 +364,13 @@ export const Navbar = ({
           }}
         />
       </Link>
-      <div className="flex gap-[30px] items-center ">
-        <div className="flex gap-[30px] items-end">
+      <div className="flex items-center gap-[30px]">
+        <div className="flex items-end gap-[30px]">
           {routes.map((route, index) => (
             <Link
               key={index}
               href={route.url}
-              className={`cursor-pointer text-white relative font-medium`}
+              className={`relative cursor-pointer font-medium text-white`}
               onClick={() => {
                 // setIsLoading(true);
                 if (pathname === route.url) {
@@ -286,14 +381,14 @@ export const Navbar = ({
               <p className="hover:text-gray-200">{route.label}</p>
               {pathname === route.url && !showGlobalSearch && (
                 <p
-                  className={`${"border-b-[2px] border-[#ffffff] w-full absolute bottom-[-20px]"}`}
+                  className={`${"absolute bottom-[-20px] w-full border-b-[2px] border-[#ffffff]"}`}
                 ></p>
               )}
             </Link>
           ))}
         </div>
         <div
-          className="flex justify-center items-center"
+          className="flex items-center justify-center"
           onClick={handleSearchClick}
           ref={searchRef}
         >
@@ -302,24 +397,23 @@ export const Navbar = ({
             width={15}
             height={15}
             alt="search"
-            className="cursor-pointer absolute"
+            className="absolute cursor-pointer"
           />
           {showGlobalSearch && (
             <>
               <div
-                className={`bg-white flex items-center global-search h-[40px] rounded-lg shadow-md transition duration-300 relative
-              ${isAnimate ? "animate " : "animate-close"}`}
+                className={`global-search relative flex h-[40px] items-center rounded-lg bg-white shadow-md transition duration-300 ${isAnimate ? "animate" : "animate-close"}`}
               >
                 <Image
                   src="/icons/search-icon.svg"
                   width={15}
                   height={15}
                   alt="search"
-                  className="cursor-pointer absolute ml-2"
+                  className="absolute ml-2 cursor-pointer"
                 />
                 <input
                   type="text"
-                  className="w-full h-full rounded-lg ml-7 appearance-none outline-none"
+                  className="ml-7 h-full w-full appearance-none rounded-lg outline-none"
                   placeholder="Search for patient names or id..."
                   value={searchValue}
                   onChange={(e) => handleSearchChange(e)}
@@ -327,15 +421,15 @@ export const Navbar = ({
               </div>
               {searchValue && (
                 <div
-                  className={`bg-white w-full h-[310px]  bottom-[-300px] global-search truncate p-[10px] rounded-sm shadow-md ${
+                  className={`global-search bottom-[-300px] h-[310px] w-full truncate rounded-sm bg-white p-[10px] shadow-md ${
                     isAnimate ? " " : "animate-close"
                   }`}
                 >
-                  <div className="h-full w-full overflow-y-scroll flex flex-col gap-[8px]">
+                  <div className="flex h-full w-full flex-col gap-[8px] overflow-y-scroll">
                     {tabsUrls.map((tab, index) => (
                       <div key={index} className="flex flex-col gap-[8px]">
                         <p
-                          className="bg-[#007C85] p-[10px] text-white font-bold flex justify-between items-center mr-2"
+                          className="mr-2 flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
                           key={index}
                         >
                           <span>{tab.label}</span>
@@ -348,7 +442,7 @@ export const Navbar = ({
                                 {tab.subTab.map((sub, subIndex) => (
                                   <div key={subIndex}>
                                     <div
-                                      className="bg-[#007C85] p-[10px] text-white font-bold flex justify-between items-center mr-2"
+                                      className="mr-2 flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
                                       key={index}
                                     >
                                       <div className="flex gap-[10px]">
@@ -366,12 +460,12 @@ export const Navbar = ({
                                         onClick={() => {
                                           onPatientClick(
                                             patient.uuid,
-                                            tab.subTab[0]?.url
+                                            tab.subTab[0]?.url,
                                           );
                                         }}
                                         key={index}
                                         data-uuid={patient.uuid}
-                                        className="bg-white hover:bg-[#D9D9D933] p-[10px] pl-[40px] flex justify-between cursor-pointer"
+                                        className="flex cursor-pointer justify-between bg-white p-[10px] pl-[40px] hover:bg-[#D9D9D933]"
                                       >
                                         <span>
                                           {patient.lastName} {patient.firstName}
@@ -393,7 +487,7 @@ export const Navbar = ({
                                 }}
                                 key={index}
                                 data-uuid={patient.uuid}
-                                className="bg-white hover:bg-[#D9D9D933] p-[10px] flex justify-between cursor-pointer"
+                                className="flex cursor-pointer justify-between bg-white p-[10px] hover:bg-[#D9D9D933]"
                               >
                                 <span>
                                   {patient.lastName} {patient.firstName}
@@ -409,7 +503,7 @@ export const Navbar = ({
                                     {tab.subTab.map((sub, subIndex) => (
                                       <div key={subIndex}>
                                         <div
-                                          className="bg-[#007C85] p-[10px] text-white font-bold flex justify-between items-center"
+                                          className="flex items-center justify-between bg-[#007C85] p-[10px] font-bold text-white"
                                           key={index}
                                         >
                                           <div className="flex gap-[10px]">
@@ -429,12 +523,12 @@ export const Navbar = ({
                                               onClick={() => {
                                                 onPatientClick(
                                                   patient.uuid,
-                                                  tab.subTab[0]?.url
+                                                  tab.subTab[0]?.url,
                                                 );
                                               }}
                                               key={index}
                                               data-uuid={patient.uuid}
-                                              className="bg-white hover:bg-[#D9D9D933] p-[10px] pl-[40px] flex justify-between cursor-pointer"
+                                              className="flex cursor-pointer justify-between bg-white p-[10px] pl-[40px] hover:bg-[#D9D9D933]"
                                             >
                                               <span>
                                                 {patient.lastName}{" "}
@@ -442,7 +536,7 @@ export const Navbar = ({
                                               </span>
                                               <span>{patient.uuid}</span>
                                             </p>
-                                          )
+                                          ),
                                         )}
                                       </div>
                                     ))}
@@ -460,7 +554,7 @@ export const Navbar = ({
             </>
           )}
         </div>
-        <div className="flex gap-3 items-center  justify-end">
+        <div className="flex items-center justify-end gap-3">
           <Image
             src={"/imgs/drake.png"}
             alt={""}
@@ -470,9 +564,9 @@ export const Navbar = ({
           />
           <Image
             ref={iconRef}
-            className={`cursor-pointer select-none flex justify-end w-full ${
+            className={`flex w-full cursor-pointer select-none justify-end ${
               dropdownOpen ? "rotate-180" : ""
-            } duration-300 w-auto h-auto`}
+            } h-auto w-auto duration-300`}
             onClick={() => {
               console.log("Toggling dropdownOpen state");
               setDropdownOpen((prevValue) => !prevValue);
