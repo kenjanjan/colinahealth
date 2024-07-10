@@ -176,7 +176,7 @@ const DueMedication = () => {
     setIsErrorOpen(true);
   };
   return (
-    <div className="flex h-full w-full flex-col justify-between px-[150px] pt-[90px]">
+    <div className="flex h-full w-full flex-col justify-between px-[150px] py-[90px]">
       <div className="h-full w-full">
         <div className="flex items-center justify-between">
           <div className="flex h-full flex-col justify-center">

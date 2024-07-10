@@ -165,7 +165,7 @@ const DBDueMedication = ({
   };
 
   return (
-    <div className="h-[360px] w-full">
+    <div className="h-full w-full relative">
       {isLoading ? (
         <DBDueMedicationLoader />
       ) : dueMedicationList.length > 0 ? (

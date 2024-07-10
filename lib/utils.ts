@@ -43,12 +43,18 @@ export function removeKeysFromQuery({
   );
 }
 
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string | null) {
+  if (!dateString) {
+    return ""; // or you can return a default value like 'N/A'
+  }
   const date = DateTime.fromISO(dateString);
   return date.toFormat("MM / dd / yyyy");
 }
 
-export function formatTime(timeString: string) {
+export function formatTime(timeString: string | null) {
+  if (!timeString) {
+    return ""; // or you can return a default value like 'N/A'
+  }
   const time = DateTime.fromFormat(timeString, "HH:mm");
   return time.toFormat("h:mm a");
 }
@@ -72,11 +78,12 @@ export async function downloadPdf(jsonFile: any, props: any, variant: string) {
   });
 
   autoTable(doc, {
-    head: [columns.map((col: { header: any; }) => col.header)],
-    body: data.map((row: { [x: string]: any; }) => columns.map((col: { dataKey: string | number; }) => row[col.dataKey])),
+    head: [columns.map((col: { header: any }) => col.header)],
+    body: data.map((row: { [x: string]: any }) =>
+      columns.map((col: { dataKey: string | number }) => row[col.dataKey]),
+    ),
   });
 
   // Save the PDF
   doc.save(`${variant}.pdf`);
 }
-

@@ -141,7 +141,7 @@ const DBUpcomingAppointments = () => {
 
   console.log(upcomingAppointments, "upcomingAppointments");
   return (
-    <div className="h-[360px] w-full">
+    <div className="h-full w-full relative">
       {isLoading ? (
         <DBUpcomingLoader />
       ) : upcomingAppointments.length > 0 ? (
