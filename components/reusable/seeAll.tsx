@@ -3,11 +3,11 @@ import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-const SeeAll = ({ className, url }: any) => {
+const SeeAll = ({ className, url, isHovered }: any) => {
   return (
     <Link href={url?url:"/"}>
       <div
-        className={cn(`sub-title absolute bottom-3  flex`, className)}
+        className={cn(`sub-title absolute bottom-3 flex`, className)}
       >
         See All
         <Image

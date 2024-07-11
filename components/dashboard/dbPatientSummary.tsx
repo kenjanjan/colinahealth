@@ -29,6 +29,15 @@ const DBPatientSummary = ({
   const [recentPRN, setRecentPRN] = useState<any>();
   const [isMedicationCollapsed, setIsMedicationCollapsed] = useState(false);
   const [isPRNCollapsed, setIsPRNCollapsed] = useState(false);
+  const [isSeeAllHovered, setIsSeeAllHovered] = useState(false);
+
+  const onSeeAllHover = () => {
+    setIsSeeAllHovered(true);
+  };
+
+  const onSeeAllHoverClose = () => {
+    setIsSeeAllHovered(false);
+  };
 
   const toggleMedicationCollapse = () => {
     setIsMedicationCollapsed((prevState) => !prevState);
@@ -39,13 +48,11 @@ const DBPatientSummary = ({
   };
 
   const pri = patientRecentInfo!;
-  const totalPatientDue =
-    pri === undefined ? 0 : pri?.totalMedicationDue;
-  const totalPatientDone =
-    pri === undefined ? 0 : pri?.totalMedicationDone;
+  const totalPatientDue = pri === undefined ? 0 : pri?.totalMedicationDue;
+  const totalPatientDone = pri === undefined ? 0 : pri?.totalMedicationDone;
 
   console.log("totalPatientDue", totalPatientDue);
-console.log(recentPRN, "recentPRN")
+  console.log(recentPRN, "recentPRN");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -153,14 +160,16 @@ console.log(recentPRN, "recentPRN")
                 )}
               </div>
             </div>
-            <SeeAll
-              url={
-                patientId
-                  ? `/patient-overview/${patientId}/patient-details`
-                  : ""
-              }
-              className="right-[18px]"
-            />
+            <div onMouseEnter={onSeeAllHover} onMouseLeave={onSeeAllHoverClose}>
+              <SeeAll
+                url={
+                  patientId
+                    ? `/patient-overview/${patientId}/patient-details`
+                    : ""
+                }
+                className={`right-[18px] ${isSeeAllHovered ? "!text-red-500" : ""}`}
+              />
+            </div>
           </div>
           <div className="relative overflow-hidden rounded-[5px] bg-[#FAFAFA]">
             <div className="bg-[#F3BB93] p-6" />
@@ -168,7 +177,7 @@ console.log(recentPRN, "recentPRN")
               <h1 className="mb-[2px] flex items-center justify-between font-medium">
                 Vital Signs{" "}
                 <p className="sub-title">
-                  {pri?.data[0]?.vsdate === null || undefined || "No Date"? (
+                  {pri?.data[0]?.vsdate === null || undefined || "No Date" ? (
                     <></>
                   ) : (
                     <>
@@ -257,7 +266,8 @@ console.log(recentPRN, "recentPRN")
                 <h1 className="font-medium">Allergies</h1>
               </div>
 
-              {pri === undefined || sortedPatientAllergies[0].allergens===null ? (
+              {pri === undefined ||
+              sortedPatientAllergies[0].allergens === null ? (
                 <div className="sub-title absolute left-[46%] top-[50%] mt-5">
                   no data yet
                 </div>
