@@ -57,34 +57,32 @@ const ForgotPass = ({
 
   return (
     <div
-      className={`flex flex-col fixed justify-center items-center  md:w-[825.24px] lg:w-[1091px] sm:w-full px-8 md:px-0  duration-500 transition h-full 
-                ${
-                  isForgotPassword
-                    ? " opacity-100 z-50"
-                    : isOTP
-                    ? "-translate-x-[1000px] opacity-0 -z-10"
-                    : "translate-x-[1000px] opacity-0 -z-10"
-                }`}
+      className={`fixed flex h-full flex-col items-center justify-center px-8 transition duration-500 sm:w-full md:w-[825.24px] md:px-0 lg:w-[1091px] ${
+        isForgotPassword
+          ? "z-50 opacity-100"
+          : isOTP
+            ? "-z-10 -translate-x-[1000px] opacity-0"
+            : "-z-10 translate-x-[1000px] opacity-0"
+      }`}
     >
-      <h1 className="md:text-[20px] font-medium  md:text-2xl lg:mb-3 text-white md:text-[#020817] md:mb-0 mb-3">
+      <h1 className="mb-3 font-medium text-white md:mb-0 md:text-2xl md:text-[20px] md:text-[#020817] lg:mb-3">
         Forgot Password?
       </h1>
-      <p className="text-white md:text-[#020817] mb-5">
+      <p className="mb-5 text-white md:text-[#020817]">
         Enter your email below to receive your password reset instructions.
       </p>
-      <div className="relative mb-4 flex flex-col md:max-w-[642.27px] w-full">
+      <div className="relative mb-4 flex w-full flex-col md:max-w-[642.27px]">
         <form
           action=""
           onSubmit={(e) => {
             handleSubmit(e);
           }}
         >
-          <div className="w-full h-full flex flex-col gap-5">
+          <div className="flex h-full w-full flex-col gap-5">
             <input
               id="email"
               type="email"
-              className={`${isError ? "ring-1 ring-[#db3956]" : ""}  
-                      h-[60px] w-full focus:bg-opacity-10 md:bg-[#D9D9D91A] bg-[#D9D9D94D] px-3 py-6 pl-5 pb-2 text-md md:text-[#020817] text-white`}
+              className={`${isError ? "ring-1 ring-[#db3956]" : ""} text-md h-[60px] w-full bg-[#D9D9D94D] px-3 py-6 pb-2 pl-5 text-white focus:bg-opacity-10 md:bg-[#FAFAFA] md:text-[#020817]`}
               value={forgotPassEmail}
               onFocus={handleEmailFocus}
               onBlur={handleEmailBlur}
@@ -93,7 +91,7 @@ const ForgotPass = ({
             />
             <label
               htmlFor="email"
-              className={`absolute left-5 text-white transition-all duration-300 cursor-text select-none ${
+              className={`absolute left-5 cursor-text select-none text-white transition-all duration-300 ${
                 isEmailFocused || forgotPassEmail
                   ? "top-2 text-[12px] md:text-[#64748b]"
                   : "top-5 text-[15px]"
@@ -101,19 +99,17 @@ const ForgotPass = ({
             >
               {isError ? "Email" : "Email"}
             </label>
-            <p className={`${isError ? "block" : "hidden"} mt-2 error`}>
+            <p className={`${isError ? "block" : "hidden"} error mt-2`}>
               User email not found. Please try again.
             </p>
 
             <button
               disabled={isSent}
-              className={`
-                          ${isSent ? "cursor-not-allowed" : "cursor-pointer"}
-                          inline-block w-full  max-w-[642.27px] text-[15px] h-[60px] items-center bg-[#007C85] px-6  text-center font-normal text-white hover:bg-[#0E646A] transition duration-300 ease-in-out`}
+              className={` ${isSent ? "cursor-not-allowed" : "cursor-pointer"} inline-block h-[60px] w-full max-w-[642.27px] items-center bg-[#007C85] px-6 text-center text-[15px] font-normal text-white transition duration-300 ease-in-out hover:bg-[#0E646A]`}
               type="submit"
             >
               {isSent ? (
-                <div className="flex justify-center items-center w-full">
+                <div className="flex w-full items-center justify-center">
                   <Loader2 size={20} className="animate-spin" /> &nbsp;
                   Sending...
                 </div>
@@ -125,7 +121,7 @@ const ForgotPass = ({
         </form>
       </div>
       <p
-        className="cursor-pointer bottom-28 absolute text-white md:text-[#020817]"
+        className="absolute bottom-28 cursor-pointer text-white md:text-[#020817]"
         onClick={() => setIsForgotPassword(!isForgotPassword)}
       >
         Back to login

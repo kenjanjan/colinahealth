@@ -1,57 +1,57 @@
 const DBDueMedicationLoader = () => {
   return (
-    <div className="flex flex-col items-start bg-[#D9D9D91A] py-3 px-5 gap-5 w-full h-[360px] rounded-[5px]">
-      <div className="h-[30px] w-[250px] rounded-full mr-2 p-title">
+    <div className="flex h-[360px] w-full flex-col items-start gap-5 rounded-[5px] bg-[#FAFAFA] px-5 py-3">
+      <div className="p-title mr-2 h-[30px] w-[250px] rounded-full">
         Due Medications
       </div>
-      <div className=" w-full font-normal sub-title text-[15px] -mt-2 ">
+      <div className="sub-title -mt-2 w-full text-[15px] font-normal">
         Total of 0 due medication
       </div>
-      <div className="animate-pulse w-full h-full gap-[23px] flex flex-col">
-        <div className="flex items-center w-full ">
-          <div className="min-h-[50px] min-w-[50px] bg-gray-300 rounded-full"></div>
-          <div className="flex flex-row gap-2 justify-between w-full">
-            <div className="flex flex-col w-full gap-2">
-              <div className="h-[22px] w-[200px] bg-gray-200 rounded-full mr-2"></div>
-              <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
+      <div className="flex h-full w-full animate-pulse flex-col gap-[23px]">
+        <div className="flex w-full items-center">
+          <div className="min-h-[50px] min-w-[50px] rounded-full bg-gray-300"></div>
+          <div className="flex w-full flex-row justify-between gap-2">
+            <div className="flex w-full flex-col gap-2">
+              <div className="mr-2 h-[22px] w-[200px] rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
             </div>
-            <div className="gap-2 flex flex-col justify-end items-end">
-              <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
-              <div className="h-[22px] w-20 bg-gray-200 rounded-full mr-2"></div>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center w-full">
-          <div className="min-h-[50px] min-w-[50px] bg-gray-300 rounded-full "></div>
-          <div className="flex flex-row gap-2 justify-between w-full ">
-            <div className="flex flex-col w-full gap-2">
-              <div className="h-[22px] w-[200px] bg-gray-200 rounded-full mr-2"></div>
-              <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
-            </div>
-            <div className="gap-2 flex flex-col justify-end items-end">
-              <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
-              <div className="h-[22px] w-20 bg-gray-200 rounded-full mr-2"></div>
+            <div className="flex flex-col items-end justify-end gap-2">
+              <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] w-20 rounded-full bg-gray-200"></div>
             </div>
           </div>
         </div>
-        <div className="flex items-center w-full">
-          <div className="min-h-[50px] min-w-[50px] bg-gray-300 rounded-full "></div>
-          <div className="flex flex-row gap-2 justify-between w-full">
-            <div className="flex flex-col w-full gap-2">
-              <div className="h-[22px] w-[200px] bg-gray-200 rounded-full mr-2"></div>
-              <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
+        <div className="flex w-full items-center">
+          <div className="min-h-[50px] min-w-[50px] rounded-full bg-gray-300"></div>
+          <div className="flex w-full flex-row justify-between gap-2">
+            <div className="flex w-full flex-col gap-2">
+              <div className="mr-2 h-[22px] w-[200px] rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
             </div>
-            <div className="gap-2 flex flex-col justify-end items-end">
-              <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
-              <div className="h-[22px] w-20 bg-gray-200 rounded-full mr-2"></div>
+            <div className="flex flex-col items-end justify-end gap-2">
+              <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] w-20 rounded-full bg-gray-200"></div>
+            </div>
+          </div>
+        </div>
+        <div className="flex w-full items-center">
+          <div className="min-h-[50px] min-w-[50px] rounded-full bg-gray-300"></div>
+          <div className="flex w-full flex-row justify-between gap-2">
+            <div className="flex w-full flex-col gap-2">
+              <div className="mr-2 h-[22px] w-[200px] rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
+            </div>
+            <div className="flex flex-col items-end justify-end gap-2">
+              <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] w-20 rounded-full bg-gray-200"></div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex w-fit cursor-pointer items-center hover:text-[#007C85] font-semibold text-[15px] opacity-50 hover:opacity-100 text-[#151518] h-full">
+      <div className="flex h-full w-fit cursor-pointer items-center text-[15px] font-semibold text-[#151518] opacity-50 hover:text-[#007C85] hover:opacity-100">
         SEE ALL DUE
         <svg
-          className="text-[#71717A] ml-2 group-hover:text-[#007C85]"
+          className="ml-2 text-[#71717A] group-hover:text-[#007C85]"
           width="17"
           height="14"
           viewBox="0 0 10 17"

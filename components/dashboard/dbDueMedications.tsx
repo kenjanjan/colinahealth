@@ -165,11 +165,11 @@ const DBDueMedication = ({
   };
 
   return (
-    <div className="h-full w-full relative">
+    <div className="relative h-full w-full">
       {isLoading ? (
         <DBDueMedicationLoader />
       ) : dueMedicationList.length > 0 ? (
-        <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
+        <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#FAFAFA] px-5 py-3">
           <div className="h-full">
             <div className="flex flex-col">
               <p className="p-title !font-medium">
@@ -304,7 +304,7 @@ const DBDueMedication = ({
           </div>
         </div>
       ) : (
-        <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
+        <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#FAFAFA] px-5 py-3">
           <div className="h-full w-full">
             <div className="flex flex-col">
               <p className="p-title !font-medium">
@@ -317,7 +317,9 @@ const DBDueMedication = ({
               </p>
             </div>
           </div>
-          <div className="absolute flex h-full w-full items-center justify-center -ml-2 sub-title">no data yet</div>
+          <div className="sub-title absolute -ml-2 flex h-full w-full items-center justify-center">
+            no data yet
+          </div>
         </div>
       )}
     </div>
