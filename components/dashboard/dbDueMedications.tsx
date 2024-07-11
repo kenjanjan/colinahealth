@@ -172,7 +172,7 @@ const DBDueMedication = ({
         <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
           <div className="h-full">
             <div className="flex flex-col">
-              <p className="p-title !font-medium">
+              <p className="text-[20px] !font-medium">
                 Due Medication
                 <span>{dueMedicationList.length > 1 ? "s" : ""}</span>
               </p>

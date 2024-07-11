@@ -1,7 +1,7 @@
 const DBDueMedicationLoader = () => {
   return (
     <div className="flex flex-col items-start bg-[#D9D9D91A] py-3 px-5 gap-5 w-full h-[360px] rounded-[5px]">
-      <div className="h-[30px] w-[250px] rounded-full mr-2 p-title">
+      <div className="h-[30px] w-[250px] rounded-full mr-2 font-medium text-[20px]">
         Due Medications
       </div>
       <div className=" w-full font-normal sub-title text-[15px] -mt-2 ">

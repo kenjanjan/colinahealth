@@ -201,7 +201,7 @@ const Notes = () => {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Notes</p>
+              <p className="p-table-title">Notes</p>
               <span className="slash">{">"}</span>
               <span className="active">Nurse&apos;s Notes</span>
               <span className="slash">{"/"}</span>

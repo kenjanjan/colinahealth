@@ -180,7 +180,7 @@ const DueMedication = () => {
       <div className="h-full w-full">
         <div className="flex items-center justify-between">
           <div className="flex h-full flex-col justify-center">
-            <p className="p-title flex">Due Medication</p>
+            <p className="p-table-title flex">Due Medication</p>
             {/* number of patiens */}
             <p className="sub-title">
               Total of {totalDueMedication == 0 ? "0" : totalDueMedication} Due

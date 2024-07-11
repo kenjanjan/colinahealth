@@ -148,7 +148,7 @@ const DBUpcomingAppointments = () => {
         <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
           <div>
             <div className="">
-              <p className="p-title !font-medium">
+              <p className="text-[20px] font-medium">
                 Upcoming Appointment
                 <span>{upcomingAppointments.length > 1 ? "s" : ""}</span>
               </p>
@@ -282,7 +282,7 @@ const DBUpcomingAppointments = () => {
         <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
           <div className="h-full w-full">
             <div className="flex flex-col">
-              <p className="p-title !font-medium">Upcoming Appointments</p>
+              <p className="text-[20px] font-medium">Upcoming Appointments</p>
               <p className="sub-title mb-3 pt-3 text-[15px] font-normal">
                 Total of 0 upcoming appointments
               </p>

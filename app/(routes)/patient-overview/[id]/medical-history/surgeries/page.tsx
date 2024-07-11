@@ -216,7 +216,7 @@ export default function Surgeries() {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Medical History</p>
+              <p className="p-table-title">Medical History</p>
               <p className="slash">{">"}</p>
               <p
                 onClick={() => {

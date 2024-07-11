@@ -210,7 +210,7 @@ const Scheduled = () => {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Medication Logs</p>
+              <p className="p-table-title ">Medication Logs</p>
               <span className="slash">{">"}</span>
               <span className="active">Scheduled</span>
               <span className="slash">{"/"}</span>
@@ -227,24 +227,24 @@ const Scheduled = () => {
               </span>
             </div>
             <div>
-              <p className="text-[#64748B] font-normal h-[22px] text-[15px]">
+              <p className="h-[22px] text-[15px] font-normal text-[#64748B] my-1">
                 Total of {totalScheduledMeds} Scheduled Medication Logs
               </p>
             </div>
           </div>
           <div className="flex gap-2">
             <button onClick={() => isModalOpen(true)} className="btn-add gap-2">
-              <Image src="/imgs/add.svg" alt="" width={22} height={22} />
-              <p className="text-[18px]">Add</p>
+              <Image src="/imgs/add.svg" alt="" width={18} height={18} />
+              <p className="">Add</p>
             </button>
             <button className="btn-pdfs gap-2">
               <Image
                 src="/imgs/downloadpdf.svg"
                 alt=""
-                width={22}
-                height={22}
+                width={18}
+                height={18}
               />
-              <p className="text-[18px]">Download PDF</p>
+              <p className="text-[15px]">Download PDF</p>
             </button>
           </div>
         </div>
@@ -256,7 +256,7 @@ const Scheduled = () => {
               <label className=""></label>
               <div className="flex">
                 <input
-                  className="relative m-5 h-[47px] w-[573px] rounded bg-[#fff] bg-[573px] bg-[calc(100%-20px)] bg-[center] bg-no-repeat px-5 py-3 pl-10 pt-[14px] text-[15px] outline-none ring-[1px] ring-[#E7EAEE]"
+                  className="relative m-5 h-[47px] w-[573px] border-[1px] border-[#E7EAEE] rounded-[3px] bg-[#fff] bg-[center] bg-no-repeat px-5 py-3 pl-10 pt-[14px] text-[15px] outline-none  placeholder:text-[#64748B]"
                   type="text"
                   placeholder="Search by reference no. or name..."
                   value={term}
@@ -326,8 +326,8 @@ const Scheduled = () => {
               <tbody className="h-[220px] overflow-y-scroll">
                 {patientScheduledMed.length === 0 && (
                   <tr>
-                    <td className="border-1 py-5 absolute flex justify-center items-center">
-                      <p className="text-[15px] font-normal text-gray-700 flex text-center">
+                    <td className="border-1 absolute flex items-center justify-center py-5">
+                      <p className="flex text-center text-[15px] font-normal text-gray-700">
                         No Scheduled Medication Log/s <br />
                       </p>
                     </td>

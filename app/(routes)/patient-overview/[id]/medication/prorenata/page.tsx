@@ -208,7 +208,7 @@ const Prorenata = () => {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Medication Logs</p>
+              <p className="p-table-title">Medication Logs</p>
               <span className="slash">{">"}</span>
               <span
                 onClick={() => {

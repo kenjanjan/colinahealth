@@ -205,7 +205,7 @@ export default function Laboratoryresults() {
       <div className="h-full w-full">
         <div className="mb-2 flex justify-between">
           <div className="flex flex-col">
-            <p className="p-title">Laboratory Results </p>
+            <p className="p-table-title">Laboratory Results </p>
             {/* number of patients */}
             <div>
               <p className="h-[22px] w-[1157px] text-[15px] font-normal text-[#64748B]">

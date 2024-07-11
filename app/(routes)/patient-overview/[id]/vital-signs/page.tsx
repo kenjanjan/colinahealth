@@ -207,7 +207,7 @@ export default function vitalsigns() {
       <div className="h-full w-full">
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
-            <p className="p-title">Vital Signs</p>
+            <p className="p-table-title">Vital Signs</p>
 
             <div>
               <p className="h-[22px] w-[1157px] text-[15px] font-normal text-[#64748B]">

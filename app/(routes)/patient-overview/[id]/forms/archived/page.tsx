@@ -147,7 +147,7 @@ export default function ArchiveTab() {
                     `/patient-overview/${patientId.toLowerCase()}/forms`,
                   );
                 }}
-                className="p-title cursor-pointer hover:underline"
+                className="p-table-title cursor-pointer hover:underline"
               >
                 Form
               </p>
