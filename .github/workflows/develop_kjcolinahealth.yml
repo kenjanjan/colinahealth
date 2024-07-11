@@ -31,7 +31,7 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: release.zip
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node-app
 
@@ -55,15 +55,15 @@ jobs:
         run: unzip release.zip
       
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C572A69DB12E487190A813EA336C2F17 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_99D6F9E708794FF794CA9B66C4719EF0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A778F0C512ED422D999934A00C4048C4 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D19106F7F77E44D683CF062DF697E1B6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B506C01D77BF424D885A45C1931EB778 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6BFC704CFD66461D9B6463C49E1D9D55 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'kjcolinahealth'
           slot-name: 'Production'
