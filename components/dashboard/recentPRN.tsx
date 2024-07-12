@@ -71,7 +71,7 @@ const RecentPRN = ({
                 key={index}
                 className={`sub-title grid w-full grid-cols-6 gap-6 ${index > 3 ? "pl-5" : ""}`}
               >
-                <div className="col-span-4 truncate">
+                <div className="col-span-4 truncate pr-5">
                   <ResuableTooltip
                     text={`${extractMedicationName(medication?.medicationlogs_medicationLogsName)}`}
                   />

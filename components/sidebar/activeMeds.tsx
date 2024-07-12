@@ -7,8 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import useIsTruncated from "../hooks/useIsTruncated";
-import UseIstruncated from "@/lib/hooks/useIstruncated";
+import UseIsTruncated from "@/lib/hooks/useIstruncated";
 
 interface ActiveMedsProps {
   activeMeds: any[];
@@ -16,6 +15,7 @@ interface ActiveMedsProps {
 }
 
 const ActiveMeds: React.FC<ActiveMedsProps> = ({ activeMeds, isLoading }) => {
+  const [isTruncated, textRef] = UseIsTruncated();
   console.log(activeMeds, "activemeds");
 
   return (
@@ -29,8 +29,6 @@ const ActiveMeds: React.FC<ActiveMedsProps> = ({ activeMeds, isLoading }) => {
             <h1 className="mb-1 font-semibold text-[#4FF4FF]">Active Meds</h1>
             <div className="grid grid-flow-col grid-cols-2 grid-rows-3">
               {activeMeds.map((med, index) => {
-                const [isTruncated, textRef] = UseIstruncated();
-
                 return (
                   <TooltipProvider key={index}>
                     <Tooltip>
@@ -57,22 +55,22 @@ const ActiveMeds: React.FC<ActiveMedsProps> = ({ activeMeds, isLoading }) => {
                       </TooltipTrigger>
                       {isTruncated ? (
                         <TooltipContent
-                          className="z-[45] overflow-visible text-wrap rounded-[2.4px] bg-[#007C85] text-white max-w-[300px] text-[15px]"
+                          className="z-[45] max-w-[300px] overflow-visible text-wrap rounded-[2.4px] bg-[#007C85] text-[15px] text-white"
                           side="top"
                         >
                           <p>Medication: {med.prescriptions_name}</p>
                           <p>Frequency: {med.prescriptions_frequency}</p>
                           <p>Interval: {med.prescriptions_interval} hours</p>
-                          <div className="absolute left-1/2 bottom-[-5px] z-[49] h-3 w-3 -translate-x-1/2 rotate-45 transform bg-[#007C85]"></div>
+                          <div className="absolute bottom-[-5px] left-1/2 z-[49] h-3 w-3 -translate-x-1/2 rotate-45 transform bg-[#007C85]"></div>
                         </TooltipContent>
                       ) : (
                         <TooltipContent
-                          className="z-[45] overflow-visible text-wrap rounded-[2.4px] bg-[#007C85] text-white text-[15px]"
+                          className="z-[45] overflow-visible text-wrap rounded-[2.4px] bg-[#007C85] text-[15px] text-white"
                           side="top"
                         >
                           <p>Frequency: {med.prescriptions_frequency}</p>
                           <p>Interval: {med.prescriptions_interval} hours</p>
-                          <div className="absolute left-1/2 bottom-[-5px] z-[49] h-3 w-3 -translate-x-1/2 rotate-45 transform bg-[#007C85]"></div>
+                          <div className="absolute bottom-[-5px] left-1/2 z-[49] h-3 w-3 -translate-x-1/2 rotate-45 transform bg-[#007C85]"></div>
                         </TooltipContent>
                       )}
                     </Tooltip>

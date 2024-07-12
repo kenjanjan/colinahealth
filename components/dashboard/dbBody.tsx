@@ -26,7 +26,7 @@ const DBBody = () => {
         <NurseDrawer />
       </div>
       <div className="flex h-[95%] w-full gap-5 ">
-        <div className="w-4/6">
+        <div className="w-4/6 pb-3">
           <DBPatientSummary
             totalDueMedication={totalDueMedication}
             totalDone={totalDone}

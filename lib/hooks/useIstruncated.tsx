@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const UseIstruncated = () => {
+const UseIsTruncated = () => {
     const textRef = useRef<HTMLDivElement>(null);
     const [isTruncated, setIsTruncated] = useState(false);
   
@@ -12,4 +12,4 @@ const UseIstruncated = () => {
   
     return [isTruncated, textRef] as const;
   };
-export default UseIstruncated
+export default UseIsTruncated

@@ -54,6 +54,7 @@ const DoughnutChart = ({ total, totalDone }: DoughnutChartProps) => {
               display: false, // Hide the legend from the chart
             },
           },
+          
         }}
       />
       <div

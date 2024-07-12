@@ -29,15 +29,6 @@ const DBPatientSummary = ({
   const [recentPRN, setRecentPRN] = useState<any>();
   const [isMedicationCollapsed, setIsMedicationCollapsed] = useState(false);
   const [isPRNCollapsed, setIsPRNCollapsed] = useState(false);
-  const [isSeeAllHovered, setIsSeeAllHovered] = useState(false);
-
-  const onSeeAllHover = () => {
-    setIsSeeAllHovered(true);
-  };
-
-  const onSeeAllHoverClose = () => {
-    setIsSeeAllHovered(false);
-  };
 
   const toggleMedicationCollapse = () => {
     setIsMedicationCollapsed((prevState) => !prevState);
@@ -160,16 +151,15 @@ const DBPatientSummary = ({
                 )}
               </div>
             </div>
-            <div onMouseEnter={onSeeAllHover} onMouseLeave={onSeeAllHoverClose}>
-              <SeeAll
-                url={
-                  patientId
-                    ? `/patient-overview/${patientId}/patient-details`
-                    : ""
-                }
-                className={`right-[18px] ${isSeeAllHovered ? "!text-red-500" : ""}`}
-              />
-            </div>
+
+            <SeeAll
+              url={
+                patientId
+                  ? `/patient-overview/${patientId}/patient-details`
+                  : ""
+              }
+              className={`right-[18px]`}
+            />
           </div>
           <div className="relative overflow-hidden rounded-[5px] bg-[#FAFAFA]">
             <div className="bg-[#F3BB93] p-6" />
@@ -177,7 +167,9 @@ const DBPatientSummary = ({
               <h1 className="mb-[2px] flex items-center justify-between font-medium">
                 Vital Signs{" "}
                 <p className="sub-title">
-                  {pri?.data[0]?.vsdate === null || undefined || "No Date" ? (
+                  {pri?.data[0]?.vsdate === null ||
+                  pri?.data[0]?.vsdate === undefined ||
+                  pri?.data[0]?.vsdate === "No Date" ? (
                     <></>
                   ) : (
                     <>
@@ -251,7 +243,7 @@ const DBPatientSummary = ({
                     ? `patient-overview/${patientId}/medication/prorenata`
                     : ""
                 }
-                className="right-[18px]"
+                className={`right-[18px] transition-all duration-300 ${isMedicationCollapsed ? "translate-x-[200%]" : ""}`}
               />
             </div>
           </div>
@@ -277,7 +269,7 @@ const DBPatientSummary = ({
                     (allergen: any, index: number) => (
                       <div className="col-span-1 grid grid-cols-3" key={index}>
                         <div
-                          className={`sub-title col-span-2 truncate ${index > 3 ? "pl-2" : ""}`}
+                          className={`sub-title col-span-2 truncate pr-5 ${index > 3 ? "pl-2" : ""}`}
                         >
                           <ResuableTooltip text={allergen.allergens} />
                         </div>
@@ -323,7 +315,7 @@ const DBPatientSummary = ({
             </div>
             <div className="relative px-5">
               <h1 className="absolute pt-2 text-[15px] font-medium">
-                Total Due Meds of All Patients
+                Total Due Medication of All Patients
               </h1>
               <div className="flex h-full w-full items-center justify-center">
                 <DoughnutChart
