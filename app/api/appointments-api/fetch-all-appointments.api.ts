@@ -12,6 +12,7 @@ export async function fetchAllAppointments(
   filterStatusFromCheck: string[],
   startDate: string,
   endDate: string,
+  perPage: number,
   router: any // Pass router instance as a parameter
 ): Promise<any> {
   const requestData = {
@@ -22,6 +23,7 @@ export async function fetchAllAppointments(
     filterStatus: filterStatusFromCheck,
     startDate: startDate,
     endDate: endDate,
+    perPage: perPage,
   };
   try {
     console.log("searchPatient", requestData);

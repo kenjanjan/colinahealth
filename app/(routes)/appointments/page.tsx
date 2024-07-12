@@ -27,6 +27,7 @@ import { ErrorModal } from "@/components/shared/error";
 import Pagination from "@/components/shared/pagination";
 import { fetchProfileImages } from "@/app/api/patients-api/patientProfileImage.api";
 import ResuableTooltip from "@/components/reusable/tooltip";
+import PdfDownloader from "@/components/pdfDownloader";
 
 export default function AppointmentPage() {
   const router = useRouter();
@@ -235,6 +236,7 @@ export default function AppointmentPage() {
           filterStatusFromCheck,
           startD,
           endD,
+          5,
           router,
         );
         // Convert the Set back to an array
@@ -346,7 +348,16 @@ export default function AppointmentPage() {
             </p>
           </div>
           <div className="flex flex-row justify-end">
-            <DownloadPDF></DownloadPDF>
+          <PdfDownloader 
+            props={[
+              "Name",
+              "Uuid",
+              "Date",
+              "Start_Time",
+              "End_Time",
+              "Status"
+            ]}
+            variant={"Appointment List Table"}/>
           </div>
         </div>
 

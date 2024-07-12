@@ -445,3 +445,10 @@ table {
 .gray-1 {
   color: #64748b;
 }
+
+.sidebar-divider {
+  background-color:#D0D5DD;
+  height: 0.5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

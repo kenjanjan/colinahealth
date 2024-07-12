@@ -62,7 +62,7 @@ const DBPatientSummary = ({
       <div className="w-full h-full gap-3 flex flex-col">
         <div className="h-4/6 w-full gap-3">
           <div className="h-1/2 w-full flex   gap-3 relative">
-            <div className="h-full bg-[#D9D9D91A] w-1/2 ">
+            <div className="h-full bg-[#D9D9D91A] max-w-1/2 w-1/2 relative">
               <div className="h-[40px] rounded-t-[5px] bg-[#F4E394] w-full"></div>
               <div className="pt-2 pb-5 px-5">
                 <h1 className="text-[15px] font-medium">Patient Details</h1>
@@ -71,21 +71,20 @@ const DBPatientSummary = ({
                     <h1 className="text-center w-full">no data yet</h1>
                   ) : (
                     <div className="flex flex-col gap-1 w-full">
-                      <div className="flex w-full">
+                      <div className="flex w-full truncate">
                         Name:{" "}
-                        <div className="w-full  flex ">
-                          <p className="max-w-9/12 truncate">
+                        <div className="w-full ">
+                          <p className=" truncate w-full flex">
                             <ResuableTooltip
                               text={`${pri?.data[0]?.patient_firstName}${" "}
                             ${pri?.data[0]?.patient_middleName}${" "}
                           ${pri?.data[0]?.patient_lastName} ${" "}`}
                             />
-                          </p>
-                          <span className="w-3/12 ml-1">
-                            {" "}
+                             {" "}
                             - {pri?.data[0]?.patient_age}{" "}
                             {pri?.data[0]?.patient_gender}
-                          </span>
+                          </p>
+                      
                         </div>
                       </div>
                       <h1>
