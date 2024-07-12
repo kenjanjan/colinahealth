@@ -198,7 +198,7 @@ const Notes = () => {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Notes</p>
+              <p className="p-table-title">Notes</p>
               <p className="slash">{">"}</p>
               <p
                 onClick={() => {
@@ -232,7 +232,7 @@ const Notes = () => {
                 width={22}
                 height={22}
               />
-              <p className="text-[18px]">Download PDF</p>
+              <p className="text-[18px]">Generate PDF</p>
             </button>
           </div>
         </div>
