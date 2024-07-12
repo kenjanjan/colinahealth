@@ -368,7 +368,7 @@ const Prorenata = () => {
                       <td className="px-6 py-3">
                         <ResuableTooltip text={prnMed.medicationlogs_notes} />
                       </td>
-                      <td className="text-15px me-1 flex items-center rounded-full px-6 py-5">
+                      <td className="text-15px me-1 flex items-center rounded-full px-3 py-5">
                         <div
                           className={`relative flex h-[25px] w-[85px] items-center justify-center rounded-[30px] font-semibold ${
                             prnMed.medicationlogs_medicationLogStatus ===
