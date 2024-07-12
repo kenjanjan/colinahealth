@@ -7,7 +7,9 @@ export default function PatientOverviewLayout({
 }>) {
   return (
     <div className="flex h-screen relative w-full">
-      <PatientOverviewPage children={children}/>
+      <PatientOverviewPage >
+        {children}
+        </PatientOverviewPage>
     </div>
   );
 }

@@ -8,7 +8,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export async function fetchPRNMedByPatient(
   patientUuid: string,
   term: string,
-  currentPage: number,
+  currentPage: number,      
   sortBy: string,
   sortOrder: "ASC" | "DESC",
   router: any // Pass router instance as a parameter

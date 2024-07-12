@@ -19,9 +19,15 @@ import {
   EditProvider,
   useEditContext,
 } from "@/app/(routes)/patient-overview/[id]/editContext";
-import LoadingGif from "./loaders/LoadingGif";
+import { PatientOverviewProps } from "@/lib/interface";
 
-export default function PatientOverviewComponent() {
+export default function PatientOverviewComponent({
+  isCollapsed,
+  onOpenHoverEnter,
+  onOpenHoverLeave,
+  toggleSidebar,
+  isOpenHovered,
+}: PatientOverviewProps) {
   const { isEdit, isSave, toggleEdit, disableEdit } = useEditContext();
 
   useEffect(() => {
@@ -208,7 +214,7 @@ export default function PatientOverviewComponent() {
 
     const totalSize: number = Array.from(files).reduce(
       (acc, file) => acc + (file?.size || 0), // Check for null file and size
-      0
+      0,
     );
     const totalSizeMB = totalSize / (1024 * 1024); // Convert bytes to MB
 
@@ -274,13 +280,13 @@ export default function PatientOverviewComponent() {
           userIconFormData.append(
             "profileimage",
             selectedFile[i],
-            fileNames[i]
+            fileNames[i],
           );
 
           // Add lab file
           const addUserIcon = await updatePatientProfileImage(
             patientId,
-            userIconFormData
+            userIconFormData,
           );
           setIsLoading(true);
 
@@ -289,7 +295,7 @@ export default function PatientOverviewComponent() {
 
           console.log(
             `Icon FILE ${fileNames[i]} added successfully:`,
-            addUserIcon
+            addUserIcon,
           );
         }
       } else {
@@ -306,17 +312,37 @@ export default function PatientOverviewComponent() {
     }
   };
   return (
-    <div className="flex flex-col gap-[3px] w-full">
-      <div className="p-title pb-2">
+    <div className="flex w-full flex-col gap-[3px]">
+      <div className="p-table-title relative flex gap-1 pb-2">
+        <div
+          className={`flex items-center gap-5 transition-opacity duration-300 delay-150 cursor-pointer ${isCollapsed ? "opacity-100 block" : "hidden opacity-0"}`}
+          onMouseEnter={onOpenHoverEnter}
+          onMouseLeave={onOpenHoverLeave}
+          onClick={toggleSidebar}
+        >
+          <Image
+            className="ml-1"
+            src="/icons/sidebar-open.svg"
+            alt="sidebar-open"
+            width={20}
+            height={20}
+          />
+        </div>
+
         <h1>Patient Overview</h1>
+        <div
+          className={`absolute left-[2%] -mt-1 rounded-[5px] bg-[#007C85] px-3 py-2 !text-[15px] text-white transition-all duration-100 ${isOpenHovered ? "scale-100" : "scale-0"}`}
+        >
+          <h1>OPEN</h1>
+        </div>
       </div>
-      <div className="flex ring-1 w-full gap-[30px]  ring-[#D0D5DD] p-5 rounded-md">
+      <div className="flex w-full gap-[30px] rounded-md p-5 ring-1 ring-[#D0D5DD]">
         <div className="relative">
           {!isLoading ? (
             <>
               {patientImage ? (
                 <Image
-                  className="object-cover rounded-md min-w-[200px] min-h-[200px] max-w-[200px] max-h-[200px]"
+                  className="max-h-[200px] min-h-[200px] min-w-[200px] max-w-[200px] rounded-md object-cover"
                   width={200}
                   height={200}
                   src={patientImage}
@@ -324,7 +350,7 @@ export default function PatientOverviewComponent() {
                 />
               ) : (
                 <Image
-                  className="object-cover rounded-md min-w-[200px] min-h-[200px] max-w-[200px] max-h-[200px]"
+                  className="max-h-[200px] min-h-[200px] min-w-[200px] max-w-[200px] rounded-md object-cover"
                   width={200}
                   height={200}
                   src="/imgs/user-no-icon.svg"
@@ -333,7 +359,7 @@ export default function PatientOverviewComponent() {
               )}
             </>
           ) : (
-            <div className="w-[200px] h-[200px] animate-pulse bg-gray-300 rounded-lg "></div>
+            <div className="h-[200px] w-[200px] animate-pulse rounded-lg bg-gray-300"></div>
           )}
           {currentRoute === "patient-details" && isEdit && (
             <label
@@ -358,10 +384,10 @@ export default function PatientOverviewComponent() {
         </div>
 
         <div className="flex w-full justify-between">
-          <div className="flex flex-col gap-[20px] justify-between pt-[10px]">
+          <div className="flex flex-col justify-between gap-[20px] pt-[10px]">
             <div className="flex flex-col gap-[15px]">
               {isLoading ? (
-                <div className="h-[30px] w-52 bg-gray-300 rounded-full animate-pulse"></div>
+                <div className="h-[30px] w-52 animate-pulse rounded-full bg-gray-300"></div>
               ) : (
                 <p className="p-title ml-1">
                   {patientData[0]?.firstName} {patientData[0]?.middleName}{" "}
@@ -371,11 +397,11 @@ export default function PatientOverviewComponent() {
               <div className="flex flex-col gap-[15px]">
                 <div className="flex gap-[55px]">
                   {isLoading ? (
-                    <div className="flex items-start animate-pulse ">
-                      <div className="h-[22px] w-32 bg-gray-300 rounded-full mr-2"></div>
-                      <div className="h-[22px] w-24 bg-gray-400 rounded-full mr-2 "></div>
-                      <div className="h-[22px] w-36 bg-gray-300 rounded-full mr-2"></div>
-                      <div className="h-[22px] w-36 bg-gray-200 rounded-full mr-2"></div>
+                    <div className="flex animate-pulse items-start">
+                      <div className="mr-2 h-[22px] w-32 rounded-full bg-gray-300"></div>
+                      <div className="mr-2 h-[22px] w-24 rounded-full bg-gray-400"></div>
+                      <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-300"></div>
+                      <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
                     </div>
                   ) : (
                     <>
@@ -407,13 +433,13 @@ export default function PatientOverviewComponent() {
                 </div>
                 <div className="flex gap-[35px]">
                   {isLoading ? (
-                    <div className="flex items-start animate-pulse">
-                      <div className="h-5 w-44 bg-gray-400 rounded-full mr-12"></div>
-                      <div className="h-5 w-60 bg-gray-400 rounded-full"></div>
+                    <div className="flex animate-pulse items-start">
+                      <div className="mr-12 h-5 w-44 rounded-full bg-gray-400"></div>
+                      <div className="h-5 w-60 rounded-full bg-gray-400"></div>
                     </div>
                   ) : (
                     <>
-                      <div className="flex gap-[3px] w-[212px]">
+                      <div className="flex w-[212px] gap-[3px]">
                         <img
                           src="/imgs/codestatus.svg"
                           className="px-1"
@@ -424,12 +450,11 @@ export default function PatientOverviewComponent() {
                         <p>
                           Code Status:
                           <span
-                            className={` 
-                          ${
-                            patientData[0]?.codeStatus === "DNR"
-                              ? "text-red-500"
-                              : "text-blue-500"
-                          } ml-1 w-[100px]`}
+                            className={` ${
+                              patientData[0]?.codeStatus === "DNR"
+                                ? "text-red-500"
+                                : "text-blue-500"
+                            } ml-1 w-[100px]`}
                           >
                             {patientData[0]?.codeStatus}
                           </span>
@@ -446,17 +471,17 @@ export default function PatientOverviewComponent() {
                 </div>
               </div>
             </div>
-            <div className="flex gap-[50px] px-2 ">
+            <div className="flex gap-[50px] px-2">
               {isLoading ? (
-                <div className="flex items-start animate-pulse">
-                  <div className="h-8 w-10 bg-gray-300 rounded-full mr-12"></div>
-                  <div className="h-8 w-14 bg-gray-200 rounded-full mr-12"></div>
-                  <div className="h-8 w-20 bg-gray-300 rounded-full mr-12"></div>
-                  <div className="h-8 w-36 bg-gray-400 rounded-full mr-12"></div>
-                  <div className="h-8 w-28 bg-gray-300 rounded-full mr-12"></div>
-                  <div className="h-8 w-24 bg-gray-200 rounded-full mr-12"></div>
-                  <div className="h-8 w-14 bg-gray-400 rounded-full mr-12"></div>
-                  <div className="h-8 w-24 bg-gray-200 rounded-full "></div>
+                <div className="flex animate-pulse items-start">
+                  <div className="mr-12 h-8 w-10 rounded-full bg-gray-300"></div>
+                  <div className="mr-12 h-8 w-14 rounded-full bg-gray-200"></div>
+                  <div className="mr-12 h-8 w-20 rounded-full bg-gray-300"></div>
+                  <div className="mr-12 h-8 w-36 rounded-full bg-gray-400"></div>
+                  <div className="mr-12 h-8 w-28 rounded-full bg-gray-300"></div>
+                  <div className="mr-12 h-8 w-24 rounded-full bg-gray-200"></div>
+                  <div className="mr-12 h-8 w-14 rounded-full bg-gray-400"></div>
+                  <div className="h-8 w-24 rounded-full bg-gray-200"></div>
                 </div>
               ) : (
                 tabs.map((tab, index) => (
@@ -470,8 +495,8 @@ export default function PatientOverviewComponent() {
                         (tabUrl === "incident-report" &&
                           tab.label === "Notes") ||
                         (tabUrl === "archived" && tab.label === "Forms")
-                          ? "text-[#007C85] border-b-2 border-[#007C85] text-[15px] pb-1"
-                          : "hover:text-[#007C85] hover:border-b-2 pb-1 h-[31px] border-[#007C85] text-[15px]"
+                          ? "border-b-2 border-[#007C85] pb-1 text-[15px] text-[#007C85]"
+                          : "h-[31px] border-[#007C85] pb-1 text-[15px] hover:border-b-2 hover:text-[#007C85]"
                       }`}
                       onClick={() => {
                         disableEdit(); // disable edit on tab change
@@ -489,7 +514,7 @@ export default function PatientOverviewComponent() {
             <Link href={`/patient-overview/${params.id}/patient-details`}>
               <p
                 onClick={() => {}}
-                className={`underline text-[15px] font-semibold text-right mr-10 hover:text-[#007C85] ${
+                className={`mr-10 text-right text-[15px] font-semibold underline hover:text-[#007C85] ${
                   currentRoute === "patient-details" ? "text-[#007C85]" : ""
                 }`}
                 onMouseEnter={handleSeeMoreHover}

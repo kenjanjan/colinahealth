@@ -207,7 +207,7 @@ const Allergies = () => {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Medical History</p>
+              <p className="p-table-title">Medical History</p>
               <span className="slash">{">"}</span>
               <span className="active">Allergies</span>
               <span className="slash">{"/"}</span>

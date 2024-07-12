@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 
 import { onNavigate } from "@/actions/navigation";
 import Image from "next/image";
@@ -175,7 +176,7 @@ export const Navbar = (
       url: "/patient-list",
     },
     {
-      label: "Chart",
+      label: "Chart", 
       url: "/chart",
     },
   ];
@@ -429,7 +430,7 @@ export const Navbar = (
                   onChange={(e) => handleSearchChange(e)}
                 />
                 <SearchIconDynamic
-                  className={`absolute left-3 pointer-events-none ${isFocused ? "fill-[#020817]" : "fill-[#64748B]"}`}
+                  className={cn("fill-[#020817]")}
                   w={14}
                   h={14}
            

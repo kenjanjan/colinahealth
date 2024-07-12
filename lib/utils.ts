@@ -43,15 +43,53 @@ export function removeKeysFromQuery({
   );
 }
 
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string | null) {
+  if (!dateString) {
+    return ""; // or you can return a default value like 'N/A'
+  }
   const date = DateTime.fromISO(dateString);
   return date.toFormat("MM / dd / yyyy");
 }
 
-export function formatTime(timeString: string) {
+export function formatTime(timeString: string | null) {
+  if (!timeString) {
+    return ""; // or you can return a default value like 'N/A'
+  }
   const time = DateTime.fromFormat(timeString, "HH:mm");
   return time.toFormat("h:mm a");
 }
+
+export const formatTableTime = (timeString: any) => {
+  const now = new Date();
+  const [hours, minutes] = timeString.toString().split(':').map(Number);
+
+  const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+
+  const formattedTime = date.toLocaleTimeString('en-US',{
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+
+  const formattedTimeWithoutSpace = formattedTime.replace(/([\d]+:[\d]+)\s([aApP][mM])/, '$1$2');
+
+  return formattedTimeWithoutSpace.toLowerCase();
+};
+export function formatTableDate(dateString: string | number | Date): string {
+  // Create a new Date object from the provided date
+  const date = new Date(dateString);
+
+  // Get the month, day, and year
+  const month = date.toLocaleString("default", { month: "short" });
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  // Format the date
+  const formattedDate = `${month} ${day}, ${year}`;
+  
+  return formattedDate;
+};
+
 
 export async function downloadPdf(jsonFile: any, props: any, variant: string) {
   const doc = new jsPDF();
@@ -72,8 +110,10 @@ export async function downloadPdf(jsonFile: any, props: any, variant: string) {
   });
 
   autoTable(doc, {
-    head: [columns.map((col: { header: any; }) => col.header)],
-    body: data.map((row: { [x: string]: any; }) => columns.map((col: { dataKey: string | number; }) => row[col.dataKey])),
+    head: [columns.map((col: { header: any }) => col.header)],
+    body: data.map((row: { [x: string]: any }) =>
+      columns.map((col: { dataKey: string | number }) => row[col.dataKey]),
+    ),
   });
 
   // Save the PDF

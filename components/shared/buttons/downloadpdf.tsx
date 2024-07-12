@@ -14,7 +14,7 @@ const DownloadPDF = () => {
           height={18}
         />
       </div>
-      Download PDF
+      Generate PDF
     </button>
   );
 };

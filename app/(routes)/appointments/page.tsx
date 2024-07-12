@@ -337,27 +337,28 @@ export default function AppointmentPage() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col justify-between px-[150px] pt-[90px]">
+    <div className="flex h-full w-full flex-col justify-between px-[150px] py-[90px]">
       <div className="h-full w-full">
         <div className="flex items-center justify-between">
           <div className="flex h-full flex-col justify-center">
-            <p className="p-title">Appointments List Records</p>
+            <p className="p-table-title">Appointments List Records</p>
 
             <p className="h-[22px] w-[1157px] text-[15px] font-normal text-[#64748B]">
               Total of {totalAppointments} Appointments
             </p>
           </div>
           <div className="flex flex-row justify-end">
-          <PdfDownloader 
-            props={[
-              "Name",
-              "Uuid",
-              "Date",
-              "Start_Time",
-              "End_Time",
-              "Status"
-            ]}
-            variant={"Appointment List Table"}/>
+            <PdfDownloader
+              props={[
+                "Name",
+                "Uuid",
+                "Date",
+                "Start_Time",
+                "End_Time",
+                "Status",
+              ]}
+              variant={"Appointment List Table"}
+            />
           </div>
         </div>
 
@@ -495,7 +496,7 @@ export default function AppointmentPage() {
           <div>
             <table className="h-full w-full items-start justify-center">
               <thead className="text-left rtl:text-right">
-              <tr className="sub-title h-[70px] border-b border-[#E7EAEE] !font-semibold uppercase">
+                <tr className="sub-title h-[70px] border-b border-[#E7EAEE] !font-semibold uppercase">
                   <td className="px-6 py-5">Name</td>
                   <td className="px-6 py-5">Appointment UID</td>
                   <td className="px-6 py-5">Date</td>
