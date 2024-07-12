@@ -261,7 +261,7 @@ body,
 .slash {
   font-weight: 500;
   font-size: 20px;
-  color: #191d2360;
+  color: #64748B;
 }
 
 .active {
@@ -273,7 +273,7 @@ body,
 .bread {
   font-weight: 500;
   font-size: 20px;
-  color: #191d2360;
+  color: #64748B;
   cursor: pointer;
 }
 

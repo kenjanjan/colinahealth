@@ -15,6 +15,9 @@ import Modal from "@/components/reusable/modal";
 import { PrnModalContent } from "@/components/modal-content/prn-modal-content";
 import Pagination from "@/components/shared/pagination";
 import ResuableTooltip from "@/components/reusable/tooltip";
+import { formatTableTime } from "@/lib/utils";
+import { formatTableDate } from "@/lib/utils";
+
 const Prorenata = () => {
   const router = useRouter();
   if (typeof window === "undefined") {
@@ -225,7 +228,7 @@ const Prorenata = () => {
               <span className="active">PRN</span>
             </div>
             <div>
-              <p className="h-[22px] w-[1157px] text-[15px] font-normal text-[#64748B]">
+              <p className="h-[22px]v my-1 w-[1157px] text-[15px] font-normal text-[#64748B]">
                 Total of {totalPRNMeds} PRN Medication Logs
               </p>
             </div>
@@ -233,7 +236,7 @@ const Prorenata = () => {
           <div className="flex gap-2">
             <button onClick={() => isModalOpen(true)} className="btn-add gap-2">
               <Image src="/imgs/add.svg" alt="" width={22} height={22} />
-              <p className="text-[18px]">Add</p>
+              <p className="">Add</p>
             </button>
             <button className="btn-pdfs gap-2">
               <Image
@@ -242,7 +245,7 @@ const Prorenata = () => {
                 width={22}
                 height={22}
               />
-              <p className="text-[18px]">Download PDF</p>
+              <p className="">Download PDF</p>
             </button>
           </div>
         </div>
@@ -254,7 +257,7 @@ const Prorenata = () => {
               <label className=""></label>
               <div className="flex">
                 <input
-                  className="relative m-5 h-[47px] w-[573px] rounded bg-[#fff] bg-[573px] bg-[calc(100%-20px)] bg-[center] bg-no-repeat px-5 py-3 pl-10 pt-[14px] text-[15px] outline-none ring-[1px] ring-[#E7EAEE]"
+                  className="relative mx-5 my-4 h-[47px] w-[460px] rounded-[3px] bg-[#fff] bg-[center] bg-no-repeat px-5 py-3 pl-10 pt-[14px] text-[15px] outline-none ring-[1px] ring-[#E7EAEE]"
                   type="text"
                   placeholder="Search by reference no. or name..."
                   value={term}
@@ -268,7 +271,7 @@ const Prorenata = () => {
                   alt="Search"
                   width="20"
                   height="20"
-                  className="pointer-events-none absolute left-8 top-9"
+                  className="pointer-events-none absolute left-8 top-8"
                 />
               </div>
             </form>
@@ -311,10 +314,11 @@ const Prorenata = () => {
             <table className="text-left rtl:text-right">
               <thead>
                 <tr className="h-[70px] border-y text-[15px] font-semibold uppercase text-[#64748B]">
-                  <td className="px-6 py-3">Medication ID</td>
+                  <td className="px-6 py-3">Medication UID</td>
                   <td className="px-6 py-3">Date</td>
                   <td className="px-6 py-3">Time</td>
                   <td className="px-6 py-3">Medication</td>
+                  <td className="px-6 py-3">Dosage</td>
                   <td className="px-6 py-3">Notes</td>
                   <td className="px-6 py-3">Status</td>
                   <td className="px-9 py-3">Action</td>
@@ -341,49 +345,41 @@ const Prorenata = () => {
                         <ResuableTooltip text={prnMed.medicationlogs_uuid} />
                       </td>
                       <td className="px-6 py-3">
-                        {prnMed.medicationlogs_medicationLogsDate}
+                        {formatTableDate(
+                          prnMed.medicationlogs_medicationLogsDate,
+                        )}{" "}
                       </td>
                       <td className="px-6 py-3">
-                        {new Date(
-                          new Date().getFullYear(), // Use current year as default
-                          new Date().getMonth(), // Use current month as default
-                          new Date().getDate(), // Use current day as default
-                          parseInt(
-                            prnMed.medicationlogs_medicationLogsTime.split(
-                              ":",
-                            )[0],
-                          ), // Extract hours
-                          parseInt(
-                            prnMed.medicationlogs_medicationLogsTime.split(
-                              ":",
-                            )[1],
-                          ), // Extract minutes
-                        ).toLocaleTimeString("en-US", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        })}
+                        {formatTableTime(
+                          prnMed.medicationlogs_medicationLogsTime,
+                        )}
+                        {/* time not formattd left as is for now  and check with local time of machine */}
                       </td>
                       <td className="px-6 py-3">
                         <ResuableTooltip
                           text={prnMed.medicationlogs_medicationLogsName}
                         />
+                      </td> 
+                      <td className="px-6 py-3">
+                       500mg
+                       {/* static value for dosage temporary*/}
                       </td>
+                   
                       <td className="px-6 py-3">
                         <ResuableTooltip text={prnMed.medicationlogs_notes} />
                       </td>
                       <td className="text-15px me-1 flex items-center rounded-full px-6 py-5">
                         <div
-                          className={`relative flex items-center rounded-[20px] px-2 font-semibold ${
+                          className={`relative flex h-[25px] w-[85px] items-center justify-center rounded-[30px] font-semibold ${
                             prnMed.medicationlogs_medicationLogStatus ===
                             "Given"
                               ? "bg-[#CCFFDD] text-[15px] text-[#17C653]" // Green color for Given
                               : prnMed.medicationlogs_medicationLogStatus ===
                                   "Held"
-                                ? "bg-[#E7EAEE] text-[15px] text-[#71717A]" // Dark color for Held
+                                ? "h-[25px] bg-[#FFF8DD] px-7 text-center text-[15px] text-[#F6C000]" // Dark color for Held
                                 : prnMed.medicationlogs_medicationLogStatus ===
                                     "Refused"
-                                  ? "bg-[#FFE8EC] text-[15px] text-[#EF4C6A]" // Red color for Refused
+                                  ? "h-[25px] w-[85px] bg-[#FFE8EC] text-[15px] text-[#DB3956]" // Red color for Refused
                                   : prnMed.medicationlogs_medicationLogStatus
                           }`}
                         >

@@ -49,3 +49,9 @@ export interface SideBarProps {
     prescriptions_dosage: string;
   }
   
+  export interface SearchIconProps {
+    className?: string;
+    w?: number;
+    h?: number;
+  }
+  

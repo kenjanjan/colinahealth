@@ -22,14 +22,6 @@ import LatestLabResult from "./sidebar/latestLabResult";
 import ActiveMeds from "./sidebar/activeMeds";
 import Notes from "./sidebar/notes";
 
-const formatDateTime = (dateTimeString: string) => {
-  const dateTime = DateTime.fromISO(dateTimeString).setZone("local");
-  if (!dateTime.isValid) {
-    return "Invalid date";
-  }
-  return dateTime.toFormat("dd / MM / yyyy : hh:mm a");
-};
-
 const Sidebar = ({
   isCollapsed,
   setIsCollapsed,
