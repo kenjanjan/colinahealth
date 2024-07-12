@@ -452,3 +452,7 @@ table {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+/* .wrapper {
+  @apply max-w-7xl lg:mx-auto md:px-10 xl:px-0 w-full;
+} */

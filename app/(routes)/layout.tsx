@@ -70,9 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="relative flex h-screen flex-col">
-        <Navbar
-        // setIsLoading={setIsLoading}
-        />
+        <Navbar />
         <Suspense fallback={<Loading />}>
           <div className="flex-grow">{children}</div>
         </Suspense>

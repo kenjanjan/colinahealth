@@ -15,6 +15,7 @@ import {
   PatientInfoProps,
   ActiveMedsProps,
 } from "@/lib/interface";
+
 import RecentMedication from "./sidebar/recentMedication";
 import RecentPRN from "./sidebar/recentPRN";
 import LatestVitalSign from "./sidebar/latestVitalSign";
@@ -133,16 +134,16 @@ const Sidebar = ({
             onMouseLeave={onCloseHoverLeave}
             src={`${isCloseHovered ? "/icons/sidebar-close-hover.svg" : "/icons/sidebar-close.svg"}`}
             alt="sidebar-close"
-            width={8}
-            height={8}
-            className="cursor-pointer text-[20px] text-white"
+            width={20}
+            height={20}
+            className={`cursor-pointer text-[20px] text-white ${isCollapsed ? "rotate-180 translate-x-60" : ""} transition-all duration-300`}
           />
         </div>
         <div className="sidebar-divider" />
-        <h1 className="font-semibold text-[#FCFF9D] flex items-center">
+        <h1 className="flex items-center font-semibold text-[#FCFF9D]">
           Admission Date:{" "}
           {isLoading ? (
-            <div className="animate-pulse bg-[#0a5c5e] w-[100px] h-[18px] rounded-full ml-1"></div>
+            <div className="ml-1 h-[18px] w-[100px] animate-pulse rounded-full bg-[#0a5c5e]"></div>
           ) : patientInfo?.patient_admissionDate ? (
             formatDate(patientInfo.patient_admissionDate)
           ) : (
@@ -150,15 +151,24 @@ const Sidebar = ({
           )}
         </h1>
 
-        <RecentMedication recentMedication={recentMedication} isLoading={isLoading}/>
+        <RecentMedication
+          recentMedication={recentMedication}
+          isLoading={isLoading}
+        />
 
-        <RecentPRN recentPRN={recentPRN} isLoading={isLoading}/>
+        <RecentPRN recentPRN={recentPRN} isLoading={isLoading} />
 
-        <LatestVitalSign latestVitalSign={latestVitalSign} isLoading={isLoading}/>
+        <LatestVitalSign
+          latestVitalSign={latestVitalSign}
+          isLoading={isLoading}
+        />
 
-        <LatestLabResult latestLabResult={latestLabResult} isLoading={isLoading}/>
+        <LatestLabResult
+          latestLabResult={latestLabResult}
+          isLoading={isLoading}
+        />
 
-        <ActiveMeds activeMeds={activeMeds} isLoading={isLoading}/>
+        <ActiveMeds activeMeds={activeMeds} isLoading={isLoading} />
 
         <Notes
           latestNotes={latestNotes}

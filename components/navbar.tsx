@@ -175,7 +175,7 @@ export const Navbar = (
       url: "/patient-list",
     },
     {
-      label: "Chart",
+      label: "Chart", 
       url: "/chart",
     },
   ];
