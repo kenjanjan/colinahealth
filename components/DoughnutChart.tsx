@@ -12,6 +12,8 @@ interface DoughnutChartProps {
 const DoughnutChart = ({ total, totalDone }: DoughnutChartProps) => {
   const totalNum = parseInt(String(total));
   const totalDoneNum = parseInt(String(totalDone));
+
+  console.log(totalNum, totalDoneNum ,"totalNum, totalDoneNum")
   const data = {
     datasets: [
       {
@@ -41,7 +43,7 @@ const DoughnutChart = ({ total, totalDone }: DoughnutChartProps) => {
   });
 
   return (
-    <div className="w-[180px] mt-8 mr-10">
+    <div className="w-[140px] mt-8 mr-10">
       <Doughnut
         data={data}
         options={{
@@ -52,6 +54,7 @@ const DoughnutChart = ({ total, totalDone }: DoughnutChartProps) => {
               display: false, // Hide the legend from the chart
             },
           },
+          
         }}
       />
       <div

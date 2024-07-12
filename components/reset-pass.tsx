@@ -95,14 +95,13 @@ const ResetPass = ({
 
   return (
     <div
-      className={`flex flex-col fixed justify-center items-center px-[30px] lg:w-[1091px] w-full  duration-500 transition h-full 
-              ${
-                isResetPass
-                  ? " opacity-100 z-50"
-                  : "translate-x-[1000px] opacity-0 -z-50"
-              }`}
+      className={`fixed flex h-full w-full flex-col items-center justify-center px-[30px] transition duration-500 lg:w-[1091px] ${
+        isResetPass
+          ? "z-50 opacity-100"
+          : "-z-50 translate-x-[1000px] opacity-0"
+      }`}
     >
-      <h1 className="md:text-[20px] font-medium  md:text-2xl lg:mb-3 text-white md:text-[#020817] md:mb-0 mb-3">
+      <h1 className="mb-3 font-medium text-white md:mb-0 md:text-2xl md:text-[20px] md:text-[#020817] lg:mb-3">
         Reset your Password?
       </h1>
       <p className="mb-5 text-white md:text-[#020817]">
@@ -110,14 +109,13 @@ const ResetPass = ({
       </p>
       <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col justify-center items-center "
+        className="flex w-full flex-col items-center justify-center"
       >
-        <div className="relative mb-4 flex flex-col max-w-[642.27px] w-full">
+        <div className="relative mb-4 flex w-full max-w-[642.27px] flex-col">
           <input
             id="password"
             type={!showNewPass ? "password" : "text"}
-            className={`${isInvalid ? "ring-1 ring-[#db3956]" : ""}  
-                      h-[60px] w-full bg-opacity-10   md:bg-[#D9D9D91A] bg-[#D9D9D94D] px-3 py-6 pl-5 pb-2 text-md md:text-[#64748B] text-white`}
+            className={`${isInvalid ? "ring-1 ring-[#db3956]" : ""} text-md h-[60px] w-full bg-[#D9D9D94D] bg-opacity-10 px-3 py-6 pb-2 pl-5 text-white md:bg-[#FAFAFA] md:text-[#64748B]`}
             value={newPassword}
             onFocus={handleNewPasswordFocus}
             onBlur={handleNewPasswordBlur}
@@ -126,7 +124,7 @@ const ResetPass = ({
           />
           <label
             htmlFor="password"
-            className={`absolute left-5 text-white transition-all duration-300 cursor-text select-none ${
+            className={`absolute left-5 cursor-text select-none text-white transition-all duration-300 ${
               isNewPasswordFocused || newPassword
                 ? "top-2 text-[12px] md:text-[#64748B]"
                 : "top-5 text-[15px]"
@@ -134,11 +132,13 @@ const ResetPass = ({
           >
             {isInvalid ? "New Password" : "New Password"}
           </label>
-          <p className={`${isInvalid ? "block" : "hidden"} mt-2 text-[#db3956]`}>
+          <p
+            className={`${isInvalid ? "block" : "hidden"} mt-2 text-[#db3956]`}
+          >
             Enter your password
           </p>
           <div
-            className={` absolute cursor-pointer right-3 flex items-center justify-center h-full ${
+            className={`absolute right-3 flex h-full cursor-pointer items-center justify-center ${
               isInvalid ? "-top-3" : ""
             }`}
             onClick={() => setShowNewPass(!showNewPass)}
@@ -154,12 +154,11 @@ const ResetPass = ({
           </div>
         </div>
 
-        <div className="relative mb-4 flex flex-col max-w-[642.27px] w-full">
+        <div className="relative mb-4 flex w-full max-w-[642.27px] flex-col">
           <input
             id="password"
             type={!showConfirmPass ? "password" : "text"}
-            className={`${isInvalid ? "ring-1 ring-[#db3956]" : ""}  
-                      h-[60px] w-full bg-opacity-10   md:bg-[#D9D9D91A] bg-[#D9D9D94D] px-3 py-6 pl-5 pb-2 text-md md:text-[#020817] text-white`}
+            className={`${isInvalid ? "ring-1 ring-[#db3956]" : ""} text-md h-[60px] w-full bg-[#D9D9D94D] bg-opacity-10 px-3 py-6 pb-2 pl-5 text-white md:bg-[#FAFAFA] md:text-[#020817]`}
             value={confirmPassword}
             onFocus={handleConfirmPasswordFocus}
             onBlur={handleConfirmPasswordBlur}
@@ -168,7 +167,7 @@ const ResetPass = ({
           />
           <label
             htmlFor="password"
-            className={`absolute left-5 text-white transition-all duration-300 cursor-text select-none ${
+            className={`absolute left-5 cursor-text select-none text-white transition-all duration-300 ${
               isConfirmPasswordFocused || confirmPassword
                 ? "top-2 text-[12px] md:text-[#64748B]"
                 : "top-5 text-[15px]"
@@ -176,11 +175,13 @@ const ResetPass = ({
           >
             {isInvalid ? "Confirm Password" : "Confirm Password"}
           </label>
-          <p className={`${isInvalid ? "block" : "hidden"} mt-2 text-[#db3956]`}>
+          <p
+            className={`${isInvalid ? "block" : "hidden"} mt-2 text-[#db3956]`}
+          >
             Enter your password
           </p>
           <div
-            className={` absolute cursor-pointer right-3 flex items-center justify-center h-full ${
+            className={`absolute right-3 flex h-full cursor-pointer items-center justify-center ${
               isInvalid ? "-top-3" : ""
             }`}
             onClick={() => setShowConfirmPass(!showConfirmPass)}
@@ -197,20 +198,20 @@ const ResetPass = ({
             />
           </div>
         </div>
-        {isInvalid && <p className="text-[#db3956] pb-2 text-start max-w-[642.27px] w-full">Password does not match.</p>}
+        {isInvalid && (
+          <p className="w-full max-w-[642.27px] pb-2 text-start text-[#db3956]">
+            Password does not match.
+          </p>
+        )}
         <button
           disabled={isSubmitted}
-          className={`
-                          ${
-                            isSubmitted
-                              ? "cursor-not-allowed"
-                              : "cursor-pointer"
-                          }
-                          inline-block w-full h-[60px] max-w-[642.27px] text-[15px] items-center bg-[#007C85] px-6 py-3 text-center font-medium text-white hover:bg-[#0E646A] transition duration-300 ease-in-out`}
+          className={` ${
+            isSubmitted ? "cursor-not-allowed" : "cursor-pointer"
+          } inline-block h-[60px] w-full max-w-[642.27px] items-center bg-[#007C85] px-6 py-3 text-center text-[15px] font-medium text-white transition duration-300 ease-in-out hover:bg-[#0E646A]`}
           type="submit"
         >
           {isSubmitted ? (
-            <div className="flex justify-center items-center w-full">
+            <div className="flex w-full items-center justify-center">
               <Loader2 size={20} className="animate-spin" /> &nbsp; Resetting...
             </div>
           ) : (
@@ -219,7 +220,7 @@ const ResetPass = ({
         </button>
       </form>
       <p
-        className="cursor-pointer bottom-28 absolute text-white md:text-[#020817]"
+        className="absolute bottom-28 cursor-pointer text-white md:text-[#020817]"
         onClick={() => {
           setIsResetPass(!isResetPass);
         }}

@@ -11,6 +11,7 @@ export interface SideBarProps {
   }
   
   export interface RecentMedicationProps {
+    [x: string]: any;
     medicationlogs_notes: string;
     medicationlogs_medicationLogStatus: string;
     medicationlogs_medicationLogsName: string;
@@ -49,3 +50,25 @@ export interface SideBarProps {
     prescriptions_dosage: string;
   }
   
+  export interface PatientOverviewProps {
+    isCollapsed: boolean;
+    onOpenHoverEnter: () => void;
+    onOpenHoverLeave: () => void;
+    toggleSidebar: () => void;
+    isOpenHovered: boolean;
+  }
+
+  export interface DBRecentMedicationProps {
+    recentMedication: RecentMedicationProps;
+    isMedicationCollapsed: boolean;
+    isPRNCollapsed: boolean;
+    toggleMedicationCollapse: () => void;
+    patientId: string;
+  }
+
+  export interface DBRecentPRNProps {
+    recentPRN: RecentMedicationProps;
+    isMedicationCollapsed: boolean;
+    isPRNCollapsed: boolean;
+    togglePRNCollapse: () => void;
+  }

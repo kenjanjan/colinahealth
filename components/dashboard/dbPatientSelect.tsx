@@ -18,8 +18,9 @@ import { selectPatient } from "@/app/api/patients-api/patientSelect.api";
 interface DBPatientSelectProps {
   patientId: string;
   setPatientId: (patientId: string) => void;
+  width: number;
 }
-const DBPatientSelect = ({patientId,setPatientId}:DBPatientSelectProps) => {
+const DBPatientSelect = ({patientId,setPatientId,width}:DBPatientSelectProps) => {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
  
@@ -56,7 +57,7 @@ const DBPatientSelect = ({patientId,setPatientId}:DBPatientSelectProps) => {
   
 
   return (
-    <div className="w-full">
+    <div className="w-full relative min-w-full" style={{width}}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -65,7 +66,7 @@ const DBPatientSelect = ({patientId,setPatientId}:DBPatientSelectProps) => {
             aria-expanded={open}
             className={`${
               error ? "text-[#DB3956] border-[#DB3956]": "sub-title"
-            } w-full justify-between mb-5 h-12 rounded-md shadow-sm`}
+            } w-full justify-between mb-5 h-12 rounded-md shadow-sm relative`}
           >
             {patientId
               ? patientList.find(
@@ -95,11 +96,11 @@ const DBPatientSelect = ({patientId,setPatientId}:DBPatientSelectProps) => {
               alt="arrow-down"
               className={`${
                 open ? "rotate-180" : ""
-              } ml-2 h-4 w-4 shrink-0 opacity-50 transition duration-300`}
+              } ml-2 h-4 w-4 shrink-0 opacity-50 transition duration-300 absolute right-3`}
             />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[522px] p-0 overflow-y-auto">
+        <PopoverContent className=" p-0 overflow-y-auto" style={{width}}>
           <Command
             className="w-full"
             onClick={() => {

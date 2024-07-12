@@ -36,7 +36,7 @@ const RecentMedication = ({
           </div>
           <div className="grid grid-cols-[0.5fr_1fr]">
             <div>Medication:</div>
-            <div>
+            <div className="truncate">
               <ResuableTooltip
                 text={`${recentMedication.medicationlogs_medicationLogsName}`}
               />

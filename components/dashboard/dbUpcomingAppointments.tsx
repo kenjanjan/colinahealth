@@ -141,11 +141,11 @@ const DBUpcomingAppointments = () => {
 
   console.log(upcomingAppointments, "upcomingAppointments");
   return (
-    <div className="h-[360px] w-full">
+    <div className="relative h-full w-full">
       {isLoading ? (
         <DBUpcomingLoader />
       ) : upcomingAppointments.length > 0 ? (
-        <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
+        <div className="flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#FAFAFA] px-5 py-3">
           <div>
             <div className="">
               <p className="p-title !font-medium">
@@ -279,7 +279,7 @@ const DBUpcomingAppointments = () => {
           </div>
         </div>
       ) : (
-        <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#D9D9D91A] px-5 py-3">
+        <div className="relative flex h-full w-full select-none flex-col justify-between rounded-[5px] bg-[#FAFAFA] px-5 py-3">
           <div className="h-full w-full">
             <div className="flex flex-col">
               <p className="p-title !font-medium">Upcoming Appointments</p>
