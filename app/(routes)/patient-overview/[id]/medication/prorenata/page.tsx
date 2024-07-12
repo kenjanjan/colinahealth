@@ -245,7 +245,7 @@ const Prorenata = () => {
                 width={22}
                 height={22}
               />
-              <p className="">Download PDF</p>
+              <p className="">Generate PDF</p>
             </button>
           </div>
         </div>
@@ -359,12 +359,12 @@ const Prorenata = () => {
                         <ResuableTooltip
                           text={prnMed.medicationlogs_medicationLogsName}
                         />
-                      </td> 
-                      <td className="px-6 py-3">
-                       500mg
-                       {/* static value for dosage temporary*/}
                       </td>
-                   
+                      <td className="px-6 py-3">
+                        500mg
+                        {/* static value for dosage temporary*/}
+                      </td>
+
                       <td className="px-6 py-3">
                         <ResuableTooltip text={prnMed.medicationlogs_notes} />
                       </td>

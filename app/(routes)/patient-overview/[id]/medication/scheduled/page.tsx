@@ -246,7 +246,7 @@ const Scheduled = () => {
                 width={18}
                 height={18}
               />
-              <p className="">Download PDF</p>
+              <p className="">Generate PDF</p>
             </button>
           </div>
         </div>

@@ -250,7 +250,7 @@ export default function Surgeries() {
                 width={22}
                 height={22}
               />
-              <p className="text-[18px]">Download PDF</p>
+              <p className="text-[18px]">Generate PDF</p>
             </button>
           </div>
         </div>
