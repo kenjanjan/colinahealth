@@ -325,7 +325,7 @@ const Scheduled = () => {
                   <td className="w-[14px]"></td>
                 </tr>
               </thead>
-              <tbody className="h-[220px] overflow-y-scroll">
+              <tbody className="h-[254px]">
                 {patientScheduledMed.length === 0 && (
                   <tr>
                     <td className="border-1 absolute flex items-center justify-center py-5">

@@ -25,7 +25,7 @@ const Prorenata = () => {
   // start of orderby & sortby function
   const [isOpenOrderedBy, setIsOpenOrderedBy] = useState(false);
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortBy, setSortBy] = useState("medicationLogsDate");
   const [pageNumber, setPageNumber] = useState("");
   const [patientPRNMed, setPatientPRNMed] = useState<any[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -257,7 +257,7 @@ const Prorenata = () => {
               <label className=""></label>
               <div className="flex">
                 <input
-                  className="relative mx-5 my-4 h-[47px] w-[460px] rounded-[3px] bg-[#fff] bg-[center] bg-no-repeat px-5 py-3 pl-10 pt-[14px] text-[15px] outline-none ring-[1px] ring-[#E7EAEE]"
+                  className="relative mx-5 my-4 h-[47px] w-[460px] rounded-[3px] bg-[#fff] bg-[center] bg-no-repeat px-5 py-3 pl-10 pt-[14px] text-[15px] outline-none ring-[1px] ring-[#E7EAEE]  placeholder:text-[#64748B]"
                   type="text"
                   placeholder="Search by reference no. or name..."
                   value={term}
@@ -325,7 +325,7 @@ const Prorenata = () => {
                   <td className="w-[14px]"></td>
                 </tr>
               </thead>
-              <tbody className="h-[220px] overflow-y-scroll">
+              <tbody className="h-[254px] ">
                 {patientPRNMed.length === 0 && (
                   <tr>
                     <td className="border-1 absolute flex w-[180vh] items-center justify-center py-5">
@@ -339,7 +339,7 @@ const Prorenata = () => {
                   <>
                     <tr
                       key={index}
-                      className="group border-b text-[15px] hover:bg-[#f4f4f4]"
+                      className="group  border-b text-[15px] hover:bg-[#f4f4f4]"
                     >
                       <td className="px-6 py-3">
                         <ResuableTooltip text={prnMed.medicationlogs_uuid} />
