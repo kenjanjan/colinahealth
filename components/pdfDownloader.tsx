@@ -49,6 +49,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: {
             Name: string;
@@ -74,6 +75,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch due medications",
         });
+        setIsLoading(false);
       }
     }
     if (variant === "Patient List Table") {
@@ -104,6 +106,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: {
             Uuid: string;
@@ -127,6 +130,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch due medications",
         });
+        setIsLoading(false);
       }
     }
     if (variant === "Appointment List Table") {
@@ -162,6 +166,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: {
             Name: string;
@@ -189,6 +194,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch appointment list",
         });
+        setIsLoading(false);
       }
     }
     if (variant === "Scheduled Medication Table") {
@@ -221,6 +227,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: {
             Uuid: string;
@@ -248,6 +255,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch scheduled list",
         });
+        setIsLoading(false);
       }
     }
     if (variant === "PRN Medication Table") {
@@ -280,6 +288,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: {
             Uuid: string;
@@ -307,6 +316,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch PRN list",
         });
+        setIsLoading(false);
       }
     }
     if (variant === "Nurse's Note Table" || variant === "Incident Report Table") {
@@ -340,6 +350,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: { 
             Uuid: string;
@@ -365,6 +376,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch notes list",
         });
+        setIsLoading(false);
       }
     }
     if (variant === "Vital Sign Table") {
@@ -397,6 +409,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
               </ToastAction>
             ),
           });
+          setIsLoading(false);
         } else {
           let jsonFile: { 
             Uuid: string;
@@ -426,6 +439,7 @@ const PdfDownloader = ({ props, variant, patientId }: any) => {
           title: "Uh oh! Something went wrong.",
           description: "Failed to fetch vitalSignList",
         });
+        setIsLoading(false);
       }
     }
   };
