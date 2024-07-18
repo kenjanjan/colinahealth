@@ -14,6 +14,7 @@ import Modal from "@/components/reusable/modal";
 import { VitalModalContent } from "@/components/modal-content/vital-modal-content";
 import Pagination from "@/components/shared/pagination";
 import ResuableTooltip from "@/components/reusable/tooltip";
+import PdfDownloader from "@/components/pdfDownloader";
 export default function vitalsigns() {
   const router = useRouter();
   if (typeof window === "undefined") {
@@ -166,6 +167,7 @@ export default function vitalsigns() {
           currentPage,
           sortBy,
           sortOrder as "ASC" | "DESC",
+          4,
           router,
         );
         setPatientVitalSign(response.data);
@@ -207,7 +209,7 @@ export default function vitalsigns() {
       <div className="h-full w-full">
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
-            <p className="p-title">Vital Signs</p>
+            <p className="p-table-title">Vital Signs</p>
 
             <div>
               <p className="h-[22px] w-[1157px] text-[15px] font-normal text-[#64748B]">
@@ -220,15 +222,11 @@ export default function vitalsigns() {
               <Image src="/imgs/add.svg" alt="" width={22} height={22} />
               <p className="text-[18px]">Add</p>
             </button>
-            <button className="btn-pdfs gap-2">
-              <Image
-                src="/imgs/downloadpdf.svg"
-                alt=""
-                width={22}
-                height={22}
-              />
-              <p className="text-[18px]">Download PDF</p>
-            </button>
+            <PdfDownloader
+              props={[ "Uuid", "Date", "Time", "BP", "HR", "Temp", "Resp"]}
+              variant={"Vital Sign Table"}
+              patientId={patientId}
+            />
           </div>
         </div>
 

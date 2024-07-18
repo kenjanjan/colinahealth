@@ -209,7 +209,7 @@ export default function FormsTab() {
         <div className="flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Form</p>
+              <p className="p-table-title">Form</p>
               <span className="slash">{">"}</span>
               <span
                 onClick={() => {
@@ -246,7 +246,7 @@ export default function FormsTab() {
                 width={22}
                 height={22}
               />
-              <p className="text-[18px]">Download PDF</p>
+              <p className="text-[18px]">Generate PDF</p>
             </button>
           </div>
         </div>

@@ -126,9 +126,11 @@ const DropdownMenu = ({
     <div className={`w-full max-w-[166px] w-${width} `} ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between rounded-[5px] bg-white  text-[15px] font-semibold text-[#191D23] ${!isCheckBox ? "w-full text-opacity-60 p-4 shadow-sm" : "uppercase text-[#64748B]"}`}
+        className={`flex items-center justify-between rounded-[5px] h-[47px] bg-white  text-[15px] font-semibold text-[#191D23] ${!isCheckBox ? "w-full text-opacity-60 p-4 drop-shadow-dropDown" : "uppercase text-[#64748B]"}`}
       >
-        {optionLabel}
+        <span className="ml-3">
+          {optionLabel}
+          </span>
         <Image
           src={"/icons/dropdown.svg"}
           width={18}

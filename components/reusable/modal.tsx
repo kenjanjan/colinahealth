@@ -9,7 +9,7 @@ interface ModalProps {
 
 const Modal = ({ isModalOpen, content }: ModalProps) => {
   return (
-    <div className="fixed z-[9999] inset-[-100px] bg-[#76898A99] flex items-center justify-center ">
+    <div className="fixed z-[100] inset-[-100px] bg-[#76898A99] flex items-center justify-center ">
       <div className="bg-[#FFFFFF] rounded-md">{content}</div>
     </div>
   );

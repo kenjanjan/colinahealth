@@ -41,23 +41,31 @@ const PatientOverviewPage = ({ children }: { children: ReactNode }) => {
         isCloseHovered={isCloseHovered}
       />
       <div
-        className={`absolute left-[19.4%] top-[9.5%] z-50  flex items-center justify-center rounded-[5px] bg-[#007C85] px-2 py-1 text-white transition-all duration-100 ${isCloseHovered ? "scale-100" : "scale-0"}`}
+        className={`absolute left-[19.4%] top-[9.5%] z-50 flex items-center justify-center rounded-[5px] bg-[#007C85] px-2 py-1 text-white transition-all duration-100 ${isCloseHovered ? "scale-100" : "scale-0"}`}
       >
         <h1>CLOSE</h1>
       </div>
-      
+
       <div className="flex h-full w-full flex-col">
         <div
           className={`${isCollapsed ? "px-[150px]" : "px-[40px]"} h-full w-full flex-grow px-[150px] pt-[90px] transition-all duration-300`}
         >
           <EditProvider>
-            <PatientOverviewComponent isCollapsed={isCollapsed} onOpenHoverEnter={onOpenHoverEnter} onOpenHoverLeave={onOpenHoverLeave} toggleSidebar={toggleSidebar} isOpenHovered={isOpenHovered}/>
+            <PatientOverviewComponent
+              isCollapsed={isCollapsed}
+              onOpenHoverEnter={onOpenHoverEnter}
+              onOpenHoverLeave={onOpenHoverLeave}
+              toggleSidebar={toggleSidebar}
+              isOpenHovered={isOpenHovered}
+            />
             <div className="mt-4 flex w-full items-center justify-center">
               {children}
             </div>
           </EditProvider>
         </div>
-        <Footer />
+        <Footer
+          className={`${isCollapsed ? "" : "!pr-[25%]"} transition-all duration-300`}
+        />
       </div>
     </div>
   );

@@ -216,7 +216,7 @@ export default function Surgeries() {
         <div className="mb-2 flex w-full justify-between">
           <div className="flex-row">
             <div className="flex gap-2">
-              <p className="p-title">Medical History</p>
+              <p className="p-table-title">Medical History</p>
               <p className="slash">{">"}</p>
               <p
                 onClick={() => {
@@ -250,7 +250,7 @@ export default function Surgeries() {
                 width={22}
                 height={22}
               />
-              <p className="text-[18px]">Download PDF</p>
+              <p className="text-[18px]">Generate PDF</p>
             </button>
           </div>
         </div>

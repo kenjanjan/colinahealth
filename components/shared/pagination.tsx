@@ -116,7 +116,7 @@ const Pagination = ({
               <form onSubmit={handleGoToPage}>
                 <div className="flex pl-4 h-[30px]">
                   <input
-                    className={`ipt-pagination appearance-none  text-center border-[0.9px]${
+                    className={`ipt-pagination appearance-none text-center border-[0.9px]${
                       gotoError ? " border-red-500" : " border-[#E7EAEE99]"
                     }  border-[#E7EAEE99]`}
                     type="text"

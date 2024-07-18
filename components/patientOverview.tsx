@@ -313,7 +313,7 @@ export default function PatientOverviewComponent({
   };
   return (
     <div className="flex w-full flex-col gap-[3px]">
-      <div className="p-title relative flex gap-1 pb-2">
+      <div className="p-table-title relative flex gap-1 pb-2">
         <div
           className={`flex items-center gap-5 transition-opacity duration-300 delay-150 cursor-pointer ${isCollapsed ? "opacity-100 block" : "hidden opacity-0"}`}
           onMouseEnter={onOpenHoverEnter}
@@ -336,13 +336,13 @@ export default function PatientOverviewComponent({
           <h1>OPEN</h1>
         </div>
       </div>
-      <div className="flex w-full gap-[30px] rounded-md p-5 ring-1 ring-[#D0D5DD]">
+      <div className="flex w-full gap-[30px] rounded-[5px] p-5 ring-1 ring-[#D0D5DD]">
         <div className="relative">
           {!isLoading ? (
             <>
               {patientImage ? (
                 <Image
-                  className="max-h-[200px] min-h-[200px] min-w-[200px] max-w-[200px] rounded-md object-cover"
+                  className="max-h-[200px] min-h-[200px] min-w-[200px] max-w-[200px] rounded-[5px] object-cover"
                   width={200}
                   height={200}
                   src={patientImage}
@@ -350,7 +350,7 @@ export default function PatientOverviewComponent({
                 />
               ) : (
                 <Image
-                  className="max-h-[200px] min-h-[200px] min-w-[200px] max-w-[200px] rounded-md object-cover"
+                  className="max-h-[200px] min-h-[200px] min-w-[200px] max-w-[200px] rounded-[5px] object-cover"
                   width={200}
                   height={200}
                   src="/imgs/user-no-icon.svg"

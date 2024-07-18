@@ -72,3 +72,9 @@ export interface SideBarProps {
     isPRNCollapsed: boolean;
     togglePRNCollapse: () => void;
   }
+  export interface SearchIconProps {
+    className?: string;
+    w?: number;
+    h?: number;
+  }
+  
