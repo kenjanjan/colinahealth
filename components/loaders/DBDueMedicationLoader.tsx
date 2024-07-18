@@ -12,7 +12,7 @@ const DBDueMedicationLoader = () => {
           <div className="min-h-[50px] min-w-[50px] rounded-full bg-gray-300"></div>
           <div className="flex w-full flex-row justify-between gap-2">
             <div className="flex w-full flex-col gap-2">
-              <div className="mr-2 h-[22px] w-[200px] rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] max-w-[200px] rounded-full bg-gray-200"></div>
               <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
             </div>
             <div className="flex flex-col items-end justify-end gap-2">
@@ -25,7 +25,7 @@ const DBDueMedicationLoader = () => {
           <div className="min-h-[50px] min-w-[50px] rounded-full bg-gray-300"></div>
           <div className="flex w-full flex-row justify-between gap-2">
             <div className="flex w-full flex-col gap-2">
-              <div className="mr-2 h-[22px] w-[200px] rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] max-w-[200px] rounded-full bg-gray-200"></div>
               <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
             </div>
             <div className="flex flex-col items-end justify-end gap-2">
@@ -38,7 +38,7 @@ const DBDueMedicationLoader = () => {
           <div className="min-h-[50px] min-w-[50px] rounded-full bg-gray-300"></div>
           <div className="flex w-full flex-row justify-between gap-2">
             <div className="flex w-full flex-col gap-2">
-              <div className="mr-2 h-[22px] w-[200px] rounded-full bg-gray-200"></div>
+              <div className="mr-2 h-[22px] max-w-[200px] rounded-full bg-gray-200"></div>
               <div className="mr-2 h-[22px] w-36 rounded-full bg-gray-200"></div>
             </div>
             <div className="flex flex-col items-end justify-end gap-2">

@@ -92,9 +92,10 @@ export function formatTableDate(dateString: string | number | Date): string {
 
 
 export async function downloadPdf(jsonFile: any, props: any, variant: string) {
-  const doc = new jsPDF();
+  const doc = new jsPDF({ orientation: 'landscape' });
 
   const columns = props.map((prop: any) => ({ header: prop, dataKey: prop }));
+
   const data = jsonFile.map((row: any) => {
     let newRow: any = {};
     props.forEach((prop: any) => {
@@ -103,19 +104,57 @@ export async function downloadPdf(jsonFile: any, props: any, variant: string) {
     return newRow;
   });
 
-  const tableData = data.map((row: any) => {
-    return columns.map((column: string) => {
-      return row[column];
-    });
-  });
+  // Calculate the total table width to be the width of the PDF page
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 20; // Assume a margin of 20 units on each side
+  const availableWidth = pageWidth - margin * 2;
+
+  // Adjust cell widths proportionally to fill the table width
+  const columnCount = columns.length;
+  const cellWidth = availableWidth / columnCount;
 
   autoTable(doc, {
-    head: [columns.map((col: { header: any }) => col.header)],
+    head: [columns.map((col: { header: string }) => col.header)],
     body: data.map((row: { [x: string]: any }) =>
-      columns.map((col: { dataKey: string | number }) => row[col.dataKey]),
+      columns.map((col: { dataKey: string }) => {
+        const cellContent = String(row[col.dataKey]);
+        const fontSize = Math.max(8, 10 - (cellContent.length / 10));
+        return { content: cellContent, styles: { minCellWidth: cellWidth, fontSize: fontSize } };
+      })
     ),
+    styles: { cellPadding: 1, fontSize: 10 },
+    margin: { top: 20, left: margin, right: margin },
+    theme: 'striped',
+    tableWidth: 'auto', // Automatically adjust table width
+    columnStyles: {
+      0: { cellWidth: cellWidth }, // Apply calculated width to the first column
+      // Add more column styles if needed
+    },
+    didDrawCell: (data) => {
+      if (data.section === 'body' && data.row.index === data.table.body.length - 1) {
+        data.cell.styles.fillColor = [255, 255, 255];
+      }
+    },
   });
 
-  // Save the PDF
   doc.save(`${variant}.pdf`);
+}
+
+
+export function formatCreatedAtDate(isoString:string) {
+  const date = DateTime.fromISO(isoString);
+  if (!date.isValid) {
+    console.error('Invalid date:', isoString, date.invalidReason);
+    return 'Invalid date';
+  }
+  return date.toLocaleString(DateTime.DATE_MED); // Customize the format as needed
+}
+
+export function formatCreatedAtTime(isoString:string) {
+  const time = DateTime.fromISO(isoString);
+  if (!time.isValid) {
+    console.error('Invalid time:', isoString, time.invalidReason);
+    return 'Invalid time';
+  }
+  return time.toLocaleString(DateTime.TIME_SIMPLE); // Customize the format as needed
 }

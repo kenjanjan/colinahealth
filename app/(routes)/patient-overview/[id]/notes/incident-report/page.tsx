@@ -16,6 +16,7 @@ import Modal from "@/components/reusable/modal";
 import Pagination from "@/components/shared/pagination";
 import { ImageMinus } from "lucide-react";
 import ResuableTooltip from "@/components/reusable/tooltip";
+import PdfDownloader from "@/components/pdfDownloader";
 
 const Notes = () => {
   const router = useRouter();
@@ -157,6 +158,7 @@ const Notes = () => {
           currentPage,
           sortBy,
           sortOrder as "ASC" | "DESC",
+          4,
           router,
         );
         setPatientNotes(response.data);
@@ -225,15 +227,11 @@ const Notes = () => {
               <Image src="/imgs/add.svg" alt="" width={22} height={22} />
               <p className="text-[18px]">Add</p>
             </button>
-            <button className="btn-pdfs gap-2">
-              <Image
-                src="/imgs/downloadpdf.svg"
-                alt=""
-                width={22}
-                height={22}
-              />
-              <p className="text-[18px]">Generate PDF</p>
-            </button>
+            <PdfDownloader
+              props={[ "Uuid", "Date", "Time", "Subject", "Notes"]}
+              variant={"Incident Report Table"}
+              patientId={patientId}
+            />
           </div>
         </div>
 

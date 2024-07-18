@@ -18,6 +18,7 @@ import Pagination from "@/components/shared/pagination";
 import ResuableTooltip from "@/components/reusable/tooltip";
 import { formatTableTime } from "@/lib/utils"; // Adjust the path as needed
 import { formatTableDate } from "@/lib/utils"; // Adjust the path as needed
+import PdfDownloader from "@/components/pdfDownloader";
 
 const Scheduled = () => {
   const router = useRouter();
@@ -164,6 +165,7 @@ const Scheduled = () => {
           currentPage,
           sortBy,
           sortOrder as "ASC" | "DESC",
+          4,
           router,
         );
         setPatientScheduledMed(response.data);
@@ -239,15 +241,11 @@ const Scheduled = () => {
               <Image src="/imgs/add.svg" alt="" width={18} height={18} />
               <p className="">Add</p>
             </button>
-            <button className="btn-pdfs gap-2">
-              <Image
-                src="/imgs/downloadpdf.svg"
-                alt=""
-                width={18}
-                height={18}
-              />
-              <p className="">Generate PDF</p>
-            </button>
+            <PdfDownloader
+              props={["Uuid", "Date", "Time", "Medication", "Notes", "Status"]}
+              variant={"Scheduled Medication Table"}
+              patientId={patientId}
+            />
           </div>
         </div>
 

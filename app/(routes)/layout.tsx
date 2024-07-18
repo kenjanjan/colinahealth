@@ -28,6 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       variant: "destructive",
       title: "Automatic Logout.",
       description: "You have been away for 5 minutes.",
+      
     });
     router.push("/login");
   }, [router]);

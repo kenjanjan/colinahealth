@@ -17,6 +17,7 @@ import Pagination from "@/components/shared/pagination";
 import ResuableTooltip from "@/components/reusable/tooltip";
 import { formatTableTime } from "@/lib/utils";
 import { formatTableDate } from "@/lib/utils";
+import PdfDownloader from "@/components/pdfDownloader";
 
 const Prorenata = () => {
   const router = useRouter();
@@ -164,6 +165,7 @@ const Prorenata = () => {
           currentPage,
           sortBy,
           sortOrder as "ASC" | "DESC",
+          4,
           router,
         );
         setPatientPRNMed(response.data);
@@ -238,15 +240,11 @@ const Prorenata = () => {
               <Image src="/imgs/add.svg" alt="" width={22} height={22} />
               <p className="">Add</p>
             </button>
-            <button className="btn-pdfs gap-2">
-              <Image
-                src="/imgs/downloadpdf.svg"
-                alt=""
-                width={22}
-                height={22}
-              />
-              <p className="">Generate PDF</p>
-            </button>
+            <PdfDownloader
+              props={["Uuid", "Date", "Time", "Medication", "Notes", "Status"]}
+              variant={"PRN Medication Table"}
+              patientId={patientId}
+            />
           </div>
         </div>
 
